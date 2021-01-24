@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 let db = require("quick.db");
 let database = db.get(`database`);
+let dbs = db.get(`guild`)
 
 if (!database) database = 0;
 
@@ -15,7 +16,7 @@ app.get("/", (request, response) => {
 app.get("/:code", async (req, res) => {
   if (!database) return res.json({error: "Url not found."})
   
-  let find = database.find(x => x.guild.code == req.params.code);
+  let find = await db.get(`database.${req.params.code}`);
   if (!find) return res.json({error: "Cannot find this code"})
   
   res.redirect(find.redirect);
@@ -42,6 +43,13 @@ let config = process.env
 client.login(config.token)
 
 client.on("guildRemove", async guild => {
-  let find = db.find(x => x.guild.id === guild.id);
-  if (find) return db.delete(`database.guild`)
+  let find = dbs.find(x => x === guild.id);
+  if (!find) return;
+  
+  let find2 = db.find(x => x == find.code);
+  if (!find2) return;
+  
+  db.delete(`guild.${guild.id}`);
+  db.delete(`database.${find2.code}`);
+  
 });
