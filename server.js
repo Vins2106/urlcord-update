@@ -1,7 +1,6 @@
-
 const express = require("express");
 const app = express();
-let mongoose = require("mongoose")
+let mongoose = require("mongoose");
 require("dotenv").config();
 
 let db = require("./database.js");
@@ -13,16 +12,16 @@ app.get("/", (request, response) => {
 });
 
 app.get("/:code", async (req, res) => {
-  db.findOne({guild: {code: req.params.code}}, async (err, data) => {
-    
-  })
-  
-})
+  db.findOne({ guild: { code: req.params.code } }, async (err, data) => {
+    if (err) {
+      return res.json({ error: "Unable to find this code on database."})
+    }
+  });
+});
 
 const listener = app.listen(process.env.PORT, () => {
   console.log("Your app is listening on port " + listener.address().port);
 });
-
 
 let Discord = require("discord.js");
 let client = new Discord.Client({
@@ -30,21 +29,19 @@ let client = new Discord.Client({
 });
 
 client.on("ready", () => {
-  console.log(`Ready to handle all url`)
+  console.log(`Ready to handle all url`);
 });
 
 // Bot
 
-let config = process.env
+let config = process.env;
 
-client.login(config.token)
+client.login(config.token);
 
-client.on("guildRemove", async guild => {
-  
-});
+client.on("guildRemove", async guild => {});
 
 // connect to mongodb
 mongoose.connect(config.mongo, {
   useUnifiedTopology: true,
-  useNewUrlParser: true,
+  useNewUrlParser: true
 });
