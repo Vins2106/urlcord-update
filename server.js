@@ -1,8 +1,10 @@
 
 const express = require("express");
 const app = express();
-let db = require("quick.db");
-const mongoose = require("mongoose")
+let mongoose = require("mongoose")
+require("dotenv").config();
+
+let db = require("./database.js");
 
 app.use(express.static("public"));
 
@@ -11,6 +13,10 @@ app.get("/", (request, response) => {
 });
 
 app.get("/:code", async (req, res) => {
+  db.findOne({guild: {code: req.params.code}}, async (err, data) => {
+    
+  })
+  
 })
 
 const listener = app.listen(process.env.PORT, () => {

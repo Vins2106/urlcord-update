@@ -15,7 +15,8 @@
     "body-parser": "^1.19.0",
     "quick.db": "^7.1.2",
     "mongoo": "^0.3.5",
-    "mongoose": "^5.11.13"
+    "mongoose": "^5.11.13",
+    "dotenv": "^8.2.0"
   },
   "engines": {
     "node": "12.x"
