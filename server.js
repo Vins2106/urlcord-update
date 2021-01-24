@@ -1,34 +1,47 @@
-// server.js
-// where your node app starts
 
-// we've started you off with Express (https://expressjs.com/)
-// but feel free to use whatever libraries or frameworks you'd like through `package.json`.
 const express = require("express");
 const app = express();
+let db = require("quick.db");
+let database = db.get(`database`);
 
-// our default array of dreams
-const dreams = [
-  "Find and count some sheep",
-  "Climb a really tall mountain",
-  "Wash the dishes"
-];
+if (!database) database = 0;
 
-// make all the files in 'public' available
-// https://expressjs.com/en/starter/static-files.html
 app.use(express.static("public"));
 
-// https://expressjs.com/en/starter/basic-routing.html
 app.get("/", (request, response) => {
   response.sendFile(__dirname + "/views/index.html");
 });
 
-// send the default array of dreams to the webpage
-app.get("/dreams", (request, response) => {
-  // express helps us take JS objects and send them as JSON
-  response.json(dreams);
-});
+app.get("/:code", async (req, res) => {
+  if (!database) return res.json({error: "Url not found."})
+  
+  let find = database.find(x => x.guild.code == req.params.code);
+  if (!find) return res.json({error: "Cannot find this code"})
+  
+  res.redirect(find.redirect);
+})
 
-// listen for requests :)
 const listener = app.listen(process.env.PORT, () => {
   console.log("Your app is listening on port " + listener.address().port);
+});
+
+
+let Discord = require("discord.js");
+let client = new Discord.Client({
+  disableMentions: "everyone"
+});
+
+client.on("ready", () => {
+  console.log(`Ready to handle ${database.length || 0} link`)
+});
+
+// Bot
+
+let config = process.env
+
+client.login(config.token)
+
+client.on("guildRemove", async guild => {
+  let find = db.find(x => x.guild.id === guild.id);
+  if (find) return db.delete(`database.guild`)
 });
