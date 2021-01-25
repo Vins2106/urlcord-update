@@ -29,7 +29,7 @@ app.get("/:code", async (req, res) => {
     
     if (data) {
       
-      data.used + 1;
+      data.used =  1;
       data.save()
       
       return res.redirect(data.guild.redirect)
@@ -104,6 +104,7 @@ client.on("message", async message => {
     .addField(`${prefix}setup`, 'Setup the own invite url')
     .addField(`${prefix}link`, 'Get this server own invite link')
     .addField(`${prefix}tutorial`, 'Get the tutorial embed')
+    .addField(`${prefix}info`, 'Get this server url info')
     .setFooter(`©️ URLCORD.CF - 2021`)
     
     message.channel.send(embed);
@@ -245,7 +246,7 @@ client.on("message", async message => {
     db.findOne({guild_id: message.guild.id}, async (err, data) => {
       
       if (data) {
-        return message.channel.send(`here: https://urlcord.cf/${data.guild.code}`)
+        return message.channel.send(`here: https://urlcord.cf/${data.guild.code}\nsetup by: ${data.user.tag} [${data.user.id}]`)
       } else {
         return message.channel.send(`Error: This server do not setup`)
       }
@@ -269,10 +270,40 @@ client.on("message", async message => {
   }
   
   if (cmd === "info") {
-    
-    
+    db.findOne({guild_id: message.guild.id}, async (err, data) => {
+
+      if (data) {
     const embed = new Discord.MessageEmbed()
     .setAuthor(`${message.guild.name} Invite link information`, message.guild.iconURL())
+    .setDescription(`This server invite link is https://urlcord.cf/${data.guild.code}`)
+    .addField(`JS Structures`, `\`\`\`js
+    {
+    guild_id: ${data.guild.id},
+    code: ${data.code},
+    used: ${data.used},
+    guild: {id: ${data.guild.id}, code: ${data.guild.code}, redirect: ${data.guild.redirect}}},
+    user: {id: ${data.user.id}, tag: ${data.user.tag}, username: ${data.user.username}}
+    }
+    \`\`\``)
+    .addField(`Normat Stuctures`, `\`\`\`
+    guild_id: ${data.guild.id}
+    code: ${data.code}
+    used: ${data.used}x
+    guild.id: ${data.guild.id}
+    guild.code: ${data.guild.code}
+    guild.redirect: ${data.guild.redirect}
+    user.id: ${data.user.id}
+    user.tag: ${data.user.tag}
+    user.username: ${data.user.username}
+    \`\`\``)
+    .setColor(color)
+    
+    return message.channel.send(embed)
+      } else {
+        return message.channel.send(`Error: This server do not setup`)
+      }
+      
+    })
   }
 });
 
