@@ -49,10 +49,46 @@ let config = process.env;
 
 client.login(config.token);
 
-client.on("guildRemove", async guild => {});
+client.on("guildRemove", async guild => {
+  
+  db.findOne({ guild: {id: guild.id } }, async (err, data) => {
+    if (err) return;
+    
+    if (data) {
+      data.remove()
+    } else {
+      return;
+    }
+  })
+  
+});
 
 // connect to mongodb
 mongoose.connect(config.mongo, {
   useUnifiedTopology: true,
   useNewUrlParser: true
+});
+
+client.on("message", async message => {
+  if (message.author.bot) return;
+  if (message.channel.type === "dm") return;
+  
+  let prefix = config.prefix;
+  
+  if (message.content.startsWith(prefix)) return;
+  const args = message.content
+    .slice(prefix.length)
+    .trim()
+    .split(/ +/g);
+  const cmd = args.shift().toLowerCase();
+  
+  if (cmd === "help") {
+    
+  };
+  
+  if (cmd === "set") {
+    
+  };
+  
+  
 });
