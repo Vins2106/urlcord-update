@@ -23,7 +23,7 @@ app.get("/:code", async (req, res) => {
       data.used + 1;
       data.save()
       
-      return res.redirect(data.redirect)
+      return res.redirect(data.guild.redirect)
       
     } else if (!data) {
       return res.json({error: "Unable to find this code on database."})
@@ -115,7 +115,7 @@ client.on("message", async message => {
     const link = await channel.createInvite({maxAge: 0, maxUses: 0});
     
     message.channel.send(succes(`Succes: This server invite url channel has been set to ${channel}`));
-        data.redirect = `https://discord.gg/${link.code}`
+        data.guild.redirect = `https://discord.gg/${link.code}`
         data.save()
         
       }
@@ -151,7 +151,7 @@ client.on("message", async message => {
         
         newData.save();
         
-        message.channel.send(succes(`Succes: Succesfully setup, the default url is ***`))
+        message.channel.send(succes(`Succes: Succesfully setup, the default url is https://urlcord.cf/${code} you can edit with **${prefix}edit <new_code>**`));
         
       }
       
@@ -161,10 +161,37 @@ client.on("message", async message => {
   };
   
   if (cmd === "unsetup") {
+    if (!message.member.hasPermission("ADMINISTRATOR")) return message.channnel.send(perms("Administrator"));
     
+    db.findOne({guild: {id: message.guild.id}}, async (err, data) => {
+      
+      if (data) {
+        
+        
+        data.remove();
+        
+        return message.channel.send(succes(`Succes: Succesfully unsetup`))
+        
+      } else {
+        
+        return message.channel.send(error(`Error: This server do not setup`));
+        
+      }
+      
+    });
   }
   
   if (cmd === "link") {
+    
+    db.findOne({guild: {id: message.guild.id}}, async (err, data) => {
+      
+      if (data) {
+        return message.channel.send(`here: ${data.guild.redirect}`)
+      } else {
+        return message.channel.send(error(`Error: This server do not setup`))
+      }
+      
+    })
     
   }
   
