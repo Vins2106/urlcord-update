@@ -89,6 +89,8 @@ client.on("message", async message => {
     .setColor(color)
     .addField(`${prefix}help`, 'Show this command, and commands list')
     .addField(`${prefix}set`, 'Set this server invite url channel')
+    .addField(`${prefix}edit`, 'Edit this server custom invite code')
+    .addField(`${prefix}unsetup`, 'Unsetup this server custom invite url or delete')
     .addField(`${prefix}setup`, 'Setup the own invite url')
     .addField(`${prefix}link`, 'Get this server own invite link')
     .addField(`${prefix}tutorial`, 'Get the tutorial embed')
@@ -101,10 +103,34 @@ client.on("message", async message => {
     let channel = message.mentions.channels.first();
     if (!channel) return message.channel.send(error(`Error: You must mentions channel first.`));
     
-    if (!message.guild.me.hasPermission("CREATE_INSTANT_INVITE")) return message.channel.send(error(`Error: Y`))
+    if (!message.guild.me.hasPermission("CREATE_INSTANT_INVITE")) return message.channel.send(perms("Create Invite"));
+    
+    db.findOne({guild: {id: message.guild.id }}, async (err, data) => {
+      
+      if (data) {
+        return message.channel.send(error(`Error: This server do not setup, use **${prefix}setup** first.`))
+      } else {
+    const link = await channel.createInvite({maxAge: 0, maxUses: 0});
+    
+    message.channel.send(succes(`Succes: This server invite url channel has been set to ${channel}`));
+        data.redirect = `https://discord.gg/${link.code}`
+        data.save()
+        
+      }
+      
+    });
+  
   };
   
+  if (cmd === "edit") {
+    
+  }
+  
   if (cmd === "setup") {
+    
+  };
+  
+  if (cmd === "unsetup") {
     
   }
   
@@ -144,5 +170,5 @@ async function succes(message) {
 }
 
 async function perms(permission) {
-  return error(`Error: Im need **${permission}**`)
+  return error(`Error: Im need **${permission}** permission`)
 }
