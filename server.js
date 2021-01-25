@@ -108,7 +108,7 @@ client.on("message", async message => {
     
     if (!message.guild.me.hasPermission("CREATE_INSTANT_INVITE")) return message.channel.send("Error: Im need Create Invite permission");
     
-    db.findOne({guild: {id: message.guild.id }}, async (err, data) => {
+    db.findOne({guild_id: message.guild.id}, async (err, data) => {
       
       if (data) {
         return message.channel.send(`Error: This server do not setup, use **${prefix}setup** first.`)
@@ -134,7 +134,7 @@ client.on("message", async message => {
     
     const channel = message.mentions.channels.first() || message.channel;
     
-    db.findOne({guild: {id: message.guild.id}}, async (err, data) => {
+    db.findOne({guild_id: message.guild.id}, async (err, data) => {
       
       if (data) {
         return message.channel.send(`Error: This server already setup.`)
@@ -148,6 +148,7 @@ client.on("message", async message => {
         let codeS = "server" + makeid(2);
             
         let newData = new db({
+          guild_id: message.guild.id,
           code: codeS,
           used: 0,
           guild: {id: message.guild.id, code: code, redirect: `https://discord.gg/${link.code}`},
@@ -161,6 +162,7 @@ client.on("message", async message => {
         const link = await channel.createInvite({maxAge: 0, maxUses: 0});
         
         let newData = new db({
+          guild_id: message.guild.id,
           code: code,
           used: 0,
           guild: {id: message.guild.id, code: code, redirect: `https://discord.gg/${link.code}`},
@@ -184,7 +186,7 @@ client.on("message", async message => {
   if (cmd === "unsetup") {
     if (!message.member.hasPermission("ADMINISTRATOR")) return message.channnel.send("Error: You need Administrator permission");
     
-    db.findOne({guild: {id: message.guild.id}}, async (err, data) => {
+    db.findOne({guild_id: message.guild.id}, async (err, data) => {
       
       if (data) {
         
@@ -204,7 +206,7 @@ client.on("message", async message => {
   
   if (cmd === "link") {
     
-    db.findOne({guild: {id: message.guild.id}}, async (err, data) => {
+    db.findOne({guild_id: message.guild.id}, async (err, data) => {
       
       if (data) {
         return message.channel.send(`here: ${data.guild.redirect}`)
