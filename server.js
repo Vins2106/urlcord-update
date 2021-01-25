@@ -8,8 +8,13 @@ let db = require("./database.js");
 
 app.use(express.static("public"));
 
-app.get("/", (request, response) => {
-  response.sendFile(__dirname + "/views/index.html");
+app.get("/", (req, res) => {
+  res.render("index.ejs", {
+    req: req,
+    res: res,
+    db: db,
+    client: client
+  })
 });
 
 app.get("/:code", async (req, res) => {
