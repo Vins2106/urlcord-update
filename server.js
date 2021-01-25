@@ -91,12 +91,17 @@ client.on("message", async message => {
     .addField(`${prefix}set`, 'Set this server invite url channel')
     .addField(`${prefix}setup`, 'Setup the own invite url')
     .addField(`${prefix}link`, 'Get this server own invite link')
-    .addFi
+    .addField(`${prefix}tutorial`, 'Get the tutorial embed')
     .setFooter(`©️ URLCORD.CF - 2021`)
+    
+    message.channel.send(embed);
   };
   
   if (cmd === "set") {
+    let channel = message.mentions.channels.first();
+    if (!channel) return message.channel.send(error(`Error: You must mentions channel first.`));
     
+    if (!message.guild.me.hasPermission("CREATE_INSTANT_INVITE")) return message.channel.send(error(`Error: Y`))
   };
   
   if (cmd === "setup") {
@@ -120,4 +125,24 @@ function makeid(length) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
    }
    return result;
+}
+
+async function error(message) {
+  const embed = new Discord.MessageEmbed()
+  .setColor("RED")
+  .setDescription(message)
+  
+  return embed;
+}
+
+async function succes(message) {
+  const embed = new Discord.MessageEmbed()
+  .setColor("GREEN")
+  .setDescription(message)
+  
+  return embed;
+}
+
+async function perms(permission) {
+  return error(`Error: Im need **${permission}**`)
 }
