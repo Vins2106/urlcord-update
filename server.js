@@ -100,6 +100,8 @@ client.on("message", async message => {
   };
   
   if (cmd === "set") {
+    if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send(perms("Administrator"))
+    
     let channel = message.mentions.channels.first();
     if (!channel) return message.channel.send(error(`Error: You must mentions channel first.`));
     
@@ -127,6 +129,34 @@ client.on("message", async message => {
   }
   
   if (cmd === "setup") {
+    if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send(perms("ADMINISTRATOR"));
+    
+    const channel = message.mentions.channel.first() || message.channel;
+    
+    db.findOne({guild: {id: message.guild.id}}, async (err, data) => {
+      
+      if (data) {
+        return message.channel.send(error(`Error: This server already setup.`))
+      } else {
+        
+        let code = "server" + makeid(2);
+        const link = await channel.createInvite({maxAge: 0, maxUses: 0});
+        
+        let newData = new db({
+          code: code,
+          used: 0,
+          guild: {id: message.guild.id, code: code, redirect: `https://discord.gg/${link.code}`},
+          user: {id: message.author.id, tag: message.author.tag, username: message.author.username}
+        });
+        
+        newData.save();
+        
+        message.channel.send(succes(`Succes: Succesfully setup, the default url is ***`))
+        
+      }
+      
+    });
+    
     
   };
   
