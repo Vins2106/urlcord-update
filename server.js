@@ -4,6 +4,7 @@ let mongoose = require("mongoose");
 require("dotenv").config();
 const color = "#05eeff"
 const passport =  require('passport');
+const session = require("express-session");
 const  Strategy = require("passport-discord").Strategy
 
 // Discord Login
@@ -16,7 +17,43 @@ passport.deserializeUser(function(obj, done) {
 var scopes = ['identify', /* 'connections', (it is currently broken) */ 'guilds', 'guilds.join'];
 var prompt = 'consent'
 
+passport.use(new Strategy({
+    clientID: "802918584497733632",
+    clientSecret: process.env.secret,
+    callbackURL: 'https://urlcord.cf/callback',
+    scope: scopes,
+    prompt: prompt
+}, function(accessToken, refreshToken, profile, done) {
+    process.nextTick(function() {
+        return done(null, profile);
+    });
+}));
+
+app.use(session({
+    secret: 'ohmygodthisbestdiscordbot',
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+app.get('/login', passport.authenticate('discord', { scope: scopes, prompt: prompt }), function(req, res) {});
+app.get('/callback',
+    passport.authenticate('discord', { failureRedirect: '/' }), function(req, res) { res.redirect('/info') } // auth success
+);
+
+
+// database mongodb;
 let db = require("./database.js");
+
+// web system
+
+app.get("/dashboard", checkAuth, async (req, res) => {
+  
+});
+
+app.get("/dashboard/:guild_id", checkAuth, async (req, res) => {
+  
+});
 
 app.use(express.static("public"));
 
@@ -317,6 +354,12 @@ client.on("message", async message => {
     })
   }
 });
+
+// global function
+function checkAuth(req, res, next) {
+    if (req.isAuthenticated()) return next();
+    res.redirect("/login")
+}
 
 function makeid(length) {
    var result           = '';
