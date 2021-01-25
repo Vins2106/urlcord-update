@@ -49,7 +49,15 @@ let db = require("./database.js");
 app.use(express.static("public"));
 
 app.get("/dashboard", checkAuth, async (req, res) => {
-  let guilds = req.user.guilds; 
+  let guildsData = req.user.guilds; 
+  
+  let guilds = []
+  
+  guildsData.forEach(guild => {
+    if (!client.guilds.cache.get(guild.id) || !client.guilds.cache.get(guild.id).members.cache.get(req.user.id).hasPermission("ADMINISTRATOR")) return;
+    
+    guilds.push(guild)
+  })
   
   res.render("dashboard.ejs", {
     req: req,
