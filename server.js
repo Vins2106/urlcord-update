@@ -156,11 +156,18 @@ let config = process.env;
 
 client.login(config.token);
 
-client.on("guildRemove", async guild => {
+client.on
+
+client.on("guildDelete", async guild => {
   
-  db.deleteOne({guild_id: guild.id})
-  
-  console.log(`Leave from ${guild.name}`)
+  db.findOne({guild_id: guild.id}, async (err, data) => {
+    if (data) {
+      data.remove()
+      console.log(`Leave from ${guild.name} and delete all data`)
+    } else {
+      console.log(`Leave from ${guild.name}`)
+    }
+  })
   
 });
 
