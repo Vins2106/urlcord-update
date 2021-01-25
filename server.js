@@ -12,9 +12,20 @@ app.get("/", (request, response) => {
 });
 
 app.get("/:code", async (req, res) => {
-  db.findOne({ guild: { code: req.params.code } }, async (err, data) => {
+  db.findOne({ code: req.params.code }, async (err, data) => {
     if (err) {
       return res.json({ error: "Unable to find this code on database."})
+    }
+    
+    if (data) {
+      
+      data.used + 1;
+      data.save()
+      
+      return res.redirect(data.redirect)
+      
+    } else if (!data) {
+      return res.json({error: "Unable to find this code on database."})
     }
   });
 });
