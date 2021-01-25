@@ -190,28 +190,28 @@ client.on("message", async message => {
     .split(/ +/g);
   const cmd = args.shift().toLowerCase();
   
-  if (cmd === "help") {
+  if (cmd === "help" || cmd === "h" || cmd === "commands") {
     const embed = new Discord.MessageEmbed()
     .setAuthor('Make your own invite url', client.user.displayAvatarURL())
     .setColor(color)
     .addField(`${prefix}help`, 'Show this command, and commands list')
-    .addField(`${prefix}set`, 'Set this server invite url channel')
-    .addField(`${prefix}edit`, 'Edit this server custom invite code')
+    .addField(`${prefix}set [channel]`, 'Set this server invite url channel')
+    .addField(`${prefix}edit [new_code]`, 'Edit this server custom invite code')
     .addField(`${prefix}unsetup`, 'Unsetup this server custom invite url or delete')
-    .addField(`${prefix}setup`, 'Setup the own invite url')
+    .addField(`${prefix}setup <channel>`, 'Setup the own invite url')
     .addField(`${prefix}link`, 'Get this server own invite link')
     .addField(`${prefix}tutorial`, 'Get the tutorial embed')
-    .addField(`${prefix}info`, 'Get this server url info')
-    .setFooter(`©️ URLCORD.CF - 2021`)
+    .addField(`${prefix}information`, 'Get this server url info')
+    .setFooter(`©️ URLCORD.CF - 2021 | [] required, <> optional`)
     
     message.channel.send(embed);
   };
   
-  if (cmd === "set") {
+  if (cmd === "set" || cmd === "channel") {
     if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send("Error: You need Administrator permission");
     
     let channel = message.mentions.channels.first();
-    if (!channel) return message.channel.send(error(`Error: You must mentions channel first.`));
+    if (!channel) return message.channel.send(`Error: You must mentions channel first.`);
     
     if (!message.guild.me.hasPermission("CREATE_INSTANT_INVITE")) return message.channel.send("Error: Im need Create Invite permission");
     
@@ -231,7 +231,7 @@ client.on("message", async message => {
   
   };
   
-  if (cmd === "edit") {
+  if (cmd === "edit" || cmd === "code") {
     if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send('Error: You need Administrator permission')
     
     db.findOne({guild_id: message.guild.id}, async (err, data) => {
@@ -262,7 +262,7 @@ client.on("message", async message => {
     
   }
   
-  if (cmd === "setup") {
+  if (cmd === "setup" || cmd === "on" || cmd === "enable") {
     if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send("Error: You need Administrator permission");
     
     const channel = message.mentions.channels.first() || message.channel;
@@ -316,7 +316,7 @@ client.on("message", async message => {
     
   };
   
-  if (cmd === "unsetup") {
+  if (cmd === "unsetup" || cmd === "off" || cmd === "disable") {
     if (!message.member.hasPermission("ADMINISTRATOR")) return message.channnel.send("Error: You need Administrator permission");
     
     db.findOne({guild_id: message.guild.id}, async (err, data) => {
@@ -337,7 +337,7 @@ client.on("message", async message => {
     });
   }
   
-  if (cmd === "link") {
+  if (cmd === "link" || cmd.toLowerCase() === message.guild.name.toLowerCase()) {
     
     db.findOne({guild_id: message.guild.id}, async (err, data) => {
       
@@ -351,7 +351,7 @@ client.on("message", async message => {
     
   }
   
-  if (cmd === "tutorial") {
+  if (cmd === "tutorial" || cmd === "howto") {
     const embed = new Discord.MessageEmbed()
     .setAuthor('How to tutorial', client.user.displayAvatarURL())
     .setColor(color)
@@ -365,7 +365,7 @@ client.on("message", async message => {
     message.channel.send(embed)
   }
   
-  if (cmd === "info") {
+  if (cmd === "info" || cmd === "information" || cmd === "own") {
     db.findOne({guild_id: message.guild.id}, async (err, data) => {
 
       if (data) {
