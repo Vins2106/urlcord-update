@@ -8,9 +8,9 @@ let db = require("./database.js");
 
 app.use(express.static("public"));
 
-app.get("/", (request, response) => {
-  response.sendFile(__dirname + "/views/index.html");
-});
+app.get("/", async (req, res) => {
+  res.redirect("https://discord.gg/MPSazfcNzA")
+})
 
 app.get("/:code", async (req, res) => {
   db.findOne({ code: req.params.code }, async (err, data) => {
