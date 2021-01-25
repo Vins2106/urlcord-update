@@ -13,7 +13,9 @@ body {
 }
 
 .my-btn {
-  border-radius: 20px !important;
+  margin-top: 10px;
+  border-radius: 26px !important;
+  font-size: 25px !important;
 }
 
 @media (min-width: 992px) { 
