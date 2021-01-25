@@ -126,11 +126,38 @@ client.on("message", async message => {
   };
   
   if (cmd === "edit") {
+    if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send('Error: You need Administrator permission')
+    
+    db.findOne({guild_id: message.guild.id}, async (err, data) => {
+      if (data) {
+        let newCode = args[0];
+        if (!newCode) return message.channel.send(`Error: Please provide new code`)
+        
+        db.find({code: newCode}, async (err, datas) => {
+          
+          if (datas) {
+            return message.channel.send(`Error: This code (**${newCode}**) already have guild, try another code`)
+          } else {
+            
+            data.code = newCode;
+            data.guild.code = newCode;
+            data.save();
+            
+            return message.channel.send(`Succes: Succesfully set server invite to https://urlcord.cf/${newCode}`)
+            
+          }
+          
+        });
+        
+      } else {
+        return message.channel.send(`Error: This server do not setup custom invite link`)
+      }
+    });
     
   }
   
   if (cmd === "setup") {
-    if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send(perms("ADMINISTRATOR"));
+    if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send("Error: You need Administrator permission");
     
     const channel = message.mentions.channels.first() || message.channel;
     
@@ -209,7 +236,7 @@ client.on("message", async message => {
     db.findOne({guild_id: message.guild.id}, async (err, data) => {
       
       if (data) {
-        return message.channel.send(`here: ${data.guild.redirect}`)
+        return message.channel.send(`here: https://urlcord.cf/${data.guild.code}`)
       } else {
         return message.channel.send(`Error: This server do not setup`)
       }
