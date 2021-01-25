@@ -3,6 +3,18 @@ const app = express();
 let mongoose = require("mongoose");
 require("dotenv").config();
 const color = "#05eeff"
+const passport =  require('passport');
+const  Strategy = require("passport-discord").Strategy
+
+// Discord Login
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+passport.deserializeUser(function(obj, done) {
+  done(null, obj);
+});
+var scopes = ['identify', /* 'connections', (it is currently broken) */ 'guilds', 'guilds.join'];
+var prompt = 'consent'
 
 let db = require("./database.js");
 
