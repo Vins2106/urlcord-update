@@ -74,7 +74,7 @@ client.on("message", async message => {
   if (message.author.bot) return;
   if (message.channel.type === "dm") return;
   
-  let prefix = config.prefix;
+  let prefix = "url"
   
   if (message.content.startsWith(prefix)) return;
   const args = message.content
