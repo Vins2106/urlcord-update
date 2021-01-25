@@ -76,7 +76,8 @@ client.on("message", async message => {
   
   let prefix = "url"
   
-  if (message.content.startsWith(prefix)) return;
+  if (!message.content.startsWith(prefix)) return;
+  
   const args = message.content
     .slice(prefix.length)
     .trim()
@@ -100,21 +101,21 @@ client.on("message", async message => {
   };
   
   if (cmd === "set") {
-    if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send(perms("Administrator"))
+    if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send("Error: You need Administrator permission");
     
     let channel = message.mentions.channels.first();
     if (!channel) return message.channel.send(error(`Error: You must mentions channel first.`));
     
-    if (!message.guild.me.hasPermission("CREATE_INSTANT_INVITE")) return message.channel.send(perms("Create Invite"));
+    if (!message.guild.me.hasPermission("CREATE_INSTANT_INVITE")) return message.channel.send("Error: Im need Create Invite permission");
     
     db.findOne({guild: {id: message.guild.id }}, async (err, data) => {
       
       if (data) {
-        return message.channel.send(error(`Error: This server do not setup, use **${prefix}setup** first.`))
+        return message.channel.send(`Error: This server do not setup, use **${prefix}setup** first.`)
       } else {
     const link = await channel.createInvite({maxAge: 0, maxUses: 0});
     
-    message.channel.send(succes(`Succes: This server invite url channel has been set to ${channel}`));
+    message.channel.send(`Succes: This server invite url channel has been set to ${channel}`);
         data.guild.redirect = `https://discord.gg/${link.code}`
         data.save()
         
@@ -131,15 +132,32 @@ client.on("message", async message => {
   if (cmd === "setup") {
     if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send(perms("ADMINISTRATOR"));
     
-    const channel = message.mentions.channel.first() || message.channel;
+    const channel = message.mentions.channels.first() || message.channel;
     
     db.findOne({guild: {id: message.guild.id}}, async (err, data) => {
       
       if (data) {
-        return message.channel.send(error(`Error: This server already setup.`))
+        return message.channel.send(`Error: This server already setup.`)
       } else {
         
         let code = "server" + makeid(2);
+        db.findOne({code: code}, async (err, data) => {
+          
+          if (data) {
+        const link = await channel.createInvite({maxAge: 0, maxUses: 0});
+        let codeS = "server" + makeid(2);
+            
+        let newData = new db({
+          code: codeS,
+          used: 0,
+          guild: {id: message.guild.id, code: code, redirect: `https://discord.gg/${link.code}`},
+          user: {id: message.author.id, tag: message.author.tag, username: message.author.username}
+        });
+        
+        newData.save();
+        
+        message.channel.send(`Succes: Succesfully setup, the default url is https://urlcord.cf/${code} you can edit with **${prefix}edit <new_code>**`);            
+          } else {
         const link = await channel.createInvite({maxAge: 0, maxUses: 0});
         
         let newData = new db({
@@ -151,7 +169,10 @@ client.on("message", async message => {
         
         newData.save();
         
-        message.channel.send(succes(`Succes: Succesfully setup, the default url is https://urlcord.cf/${code} you can edit with **${prefix}edit <new_code>**`));
+        message.channel.send(`Succes: Succesfully setup, the default url is https://urlcord.cf/${code} you can edit with **${prefix}edit <new_code>**`);            
+          }
+          
+        }); 
         
       }
       
@@ -161,7 +182,7 @@ client.on("message", async message => {
   };
   
   if (cmd === "unsetup") {
-    if (!message.member.hasPermission("ADMINISTRATOR")) return message.channnel.send(perms("Administrator"));
+    if (!message.member.hasPermission("ADMINISTRATOR")) return message.channnel.send("Error: You need Administrator permission");
     
     db.findOne({guild: {id: message.guild.id}}, async (err, data) => {
       
@@ -170,11 +191,11 @@ client.on("message", async message => {
         
         data.remove();
         
-        return message.channel.send(succes(`Succes: Succesfully unsetup`))
+        return message.channel.send(`Succes: Succesfully unsetup`)
         
       } else {
         
-        return message.channel.send(error(`Error: This server do not setup`));
+        return message.channel.send(`Error: This server do not setup`)
         
       }
       
@@ -188,7 +209,7 @@ client.on("message", async message => {
       if (data) {
         return message.channel.send(`here: ${data.guild.redirect}`)
       } else {
-        return message.channel.send(error(`Error: This server do not setup`))
+        return message.channel.send(`Error: This server do not setup`)
       }
       
     })
@@ -215,7 +236,7 @@ async function error(message) {
   .setColor("RED")
   .setDescription(message)
   
-  return embed;
+  return `${message}`;
 }
 
 async function succes(message) {
@@ -223,7 +244,7 @@ async function succes(message) {
   .setColor("GREEN")
   .setDescription(message)
   
-  return embed;
+  return `${message}`;
 }
 
 async function perms(permission) {
