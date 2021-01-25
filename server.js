@@ -38,7 +38,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.get('/login', passport.authenticate('discord', { scope: scopes, prompt: prompt }), function(req, res) {});
 app.get('/callback',
-    passport.authenticate('discord', { failureRedirect: '/' }), function(req, res) { res.redirect('/info') } // auth success
+    passport.authenticate('discord', { failureRedirect: '/' }), function(req, res) { res.redirect('/') } // auth success
 );
 
 
@@ -48,11 +48,23 @@ let db = require("./database.js");
 // web system
 
 app.get("/dashboard", checkAuth, async (req, res) => {
+  let guilds = req.user.guilds; 
   
+  res.redirect("dashboard.ejs", {
+    req: req,
+    res: res,
+    db: db,
+    guilds: guilds,
+    client: client
+  })
 });
 
 app.get("/dashboard/:guild_id", checkAuth, async (req, res) => {
-  
+  db.findOne({guild_id: req.params.guild_id}, async (err, data) => {
+    
+    if ()
+    
+  })
 });
 
 app.use(express.static("public"));
