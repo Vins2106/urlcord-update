@@ -46,11 +46,12 @@ app.get('/callback',
 let db = require("./database.js");
 
 // web system
+app.use(express.static("public"));
 
 app.get("/dashboard", checkAuth, async (req, res) => {
   let guilds = req.user.guilds; 
   
-  res.redirect("dashboard.ejs", {
+  res.render("dashboard.ejs", {
     req: req,
     res: res,
     db: db,
@@ -62,12 +63,22 @@ app.get("/dashboard", checkAuth, async (req, res) => {
 app.get("/dashboard/:guild_id", checkAuth, async (req, res) => {
   db.findOne({guild_id: req.params.guild_id}, async (err, data) => {
     
-    if ()
+    if (data) {
+      res.render("guild.ejs", {
+        req: req,
+        res: res,
+        client: client,
+        db: db,
+        data: data
+      })
+    } else {
+      res.redirect("/dashboard")
+    }
     
   })
 });
 
-app.use(express.static("public"));
+
 
 app.get("/", (req, res) => {
   res.render("index.ejs", {
