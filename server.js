@@ -29,7 +29,7 @@ app.get("/:code", async (req, res) => {
     
     if (data) {
       
-      data.used =  1;
+      data.used = data.used + 1;
       data.save()
       
       return res.redirect(data.guild.redirect)

@@ -4,7 +4,7 @@ module.exports = model(
   new Schema({
     guild_id: String,
     code: String,
-    used: String,
+    used: Number,
     guild: {id: String, code: String, redirect: String},
     user: {id: String, tag: String, username: String}
   })
