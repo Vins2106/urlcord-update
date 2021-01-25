@@ -65,7 +65,7 @@ app.get("/dashboard/:guild_id", checkAuth, async (req, res) => {
     
     if (data) {
       res.render("guild.ejs", {
-        req: req,
+        req: req, 
         res: res,
         client: client,
         db: db,
