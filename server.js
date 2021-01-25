@@ -61,7 +61,7 @@ client.login(config.token);
 
 client.on("guildRemove", async guild => {
   
-  db.findOne({ guild: {id: guild.id } }, async (err, data) => {
+  db.findOne({ guild_id: guild.id }, async (err, data) => {
     if (err) return;
     
     if (data) {
@@ -121,14 +121,13 @@ client.on("message", async message => {
     db.findOne({guild_id: message.guild.id}, async (err, data) => {
       
       if (data) {
-        return message.channel.send(`Error: This server do not setup, use **${prefix}setup** first.`)
-      } else {
     const link = await channel.createInvite({maxAge: 0, maxUses: 0});
     
     message.channel.send(`Succes: This server invite url channel has been set to ${channel}`);
         data.guild.redirect = `https://discord.gg/${link.code}`
         data.save()
-        
+      } else {        
+        return message.channel.send(`Error: This server do not setup, use **${prefix}setup** first.`)        
       }
       
     });
