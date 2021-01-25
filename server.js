@@ -133,7 +133,7 @@ client.on("message", async message => {
         let newCode = args[0];
         if (!newCode) return message.channel.send(`Error: Please provide new code`)
         
-        db.find({code: newCode}, async (err, datas) => {
+        db.findOne({code: newCode}, async (err, datas) => {
           
           if (datas) {
             return message.channel.send(`Error: This code (**${newCode}**) already have guild, try another code`)
