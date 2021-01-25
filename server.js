@@ -255,7 +255,24 @@ client.on("message", async message => {
   }
   
   if (cmd === "tutorial") {
+    const embed = new Discord.MessageEmbed()
+    .setAuthor('How to tutorial', client.user.displayAvatarURL())
+    .setColor(color)
+    .addField("Step 1", `add me to your server with [this link](https://urlcord.cf/invite)`)
+    .addField("Step 2", `give me create invite permission`)
+    .addField("Step 3", `type **${prefix}setup <channel>** and you will got default invite url`)
+    .addField("Step 4", `and you can edit with **${prefix}edit <new_code>**`)
+    .addField("Step 5", `enjoy you custom invite url :D`)
+    .setFooter(`add me on https://urlcord.cf`)
     
+    message.channel.send(embed)
+  }
+  
+  if (cmd === "info") {
+    
+    
+    const embed = new Discord.MessageEmbed()
+    .setAuthor(`${message.guild.name} Invite link information`, message.guild.iconURL())
   }
 });
 
