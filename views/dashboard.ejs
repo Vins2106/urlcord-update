@@ -22,35 +22,31 @@
   
   <% guilds.map(guild => { %>
   
-  <% db.findOne({guild_id: guild.id}, async (err, data) => { %>
-  
-  <% if (data) { %>
   <div class="card">
     <div class="card-body">
       <h5 class="card-title"><%= guild.name %></h5>
-      <p class="card-text"><button class="btn btn-outline-dark my-btn-db" onclick="document.location='/dashboard/<%= data.guild.id %>'">Manage</button></p>
+      <p class="card-text"><button class="btn btn-outline-dark my-btn-db" onclick="document.location='/dashboard/<%= guild.id %>'">Manage</button></p>
     </div>
     <div class="card-footer">
       <small class="text-muted">https://urlcord.cf/<%= data.code %></small>
     </div>
   </div>    
-  <% } else { %>
+  
+  <% }) %>
+  
+  <% unguilds.map(guild => { %>
   <div class="card">
     <div class="card-body">
       <h5 class="card-title"><%= guild.name %></h5>
       <form>
-        <p class="card-text"><button class="btn btn-outline-dark my-btn-db">Setup</button></p>
+      <p class="card-text"><button class="btn btn-outline-dark my-btn-db">Setup</button></p>
       </form>
     </div>
     <div class="card-footer">
-      <small class="text-muted">Last updated 3 mins ago</small>
+      <small class="text-muted">https://urlcord.cf/<%= data.code %></small>
     </div>
-  </div>    
-  <% } %>
-  
+  </div>      
   <% })%>
-  
-  <% }) %>
   
 </div> 
   </body>
