@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 let mongoose = require("mongoose");
 require("dotenv").config();
+const color = "#05eeff"
 
 let db = require("./database.js");
 
@@ -83,12 +84,40 @@ client.on("message", async message => {
   const cmd = args.shift().toLowerCase();
   
   if (cmd === "help") {
-    
+    const embed = new Discord.MessageEmbed()
+    .setAuthor('Make your own invite url', client.user.displayAvatarURL())
+    .setColor(color)
+    .addField(`${prefix}help`, 'Show this command, and commands list')
+    .addField(`${prefix}set`, 'Set this server invite url channel')
+    .addField(`${prefix}setup`, 'Setup the own invite url')
+    .addField(`${prefix}link`, 'Get this server own invite link')
+    .addFi
+    .setFooter(`©️ URLCORD.CF - 2021`)
   };
   
   if (cmd === "set") {
     
   };
   
+  if (cmd === "setup") {
+    
+  }
   
+  if (cmd === "link") {
+    
+  }
+  
+  if (cmd === "tutorial") {
+    
+  }
 });
+
+function makeid(length) {
+   var result           = '';
+   var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+   var charactersLength = characters.length;
+   for ( var i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+   }
+   return result;
+}
