@@ -6,6 +6,9 @@ const color = "#05eeff"
 const passport =  require('passport');
 const session = require("express-session");
 const  Strategy = require("passport-discord").Strategy;
+let bodyParser = require("body-parser");
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
+
 
 // Discord Login
 passport.serializeUser(function(user, done) {
@@ -61,6 +64,8 @@ app.get("/dashboard", checkAuth, async (req, res) => {
 });
 
 app.get("/dashboard/:guild_id", checkAuth, async (req, res) => {
+  if (!client.guilds.cache.get(req.params.guild_id) || !client.guilds.cache.get(req.params.guild_id).members.cache.get(req.user.id).hasPermission("ADMINISTRATOR")) return;
+  
   db.findOne({guild_id: req.params.guild_id}, async (err, data) => {
     
     if (data) {
@@ -78,9 +83,34 @@ app.get("/dashboard/:guild_id", checkAuth, async (req, res) => {
   })
 });
 
-app.post("/dashboard/:guild_id", checkAuth, async (req, res) => {
+app.post("/dashboard/:guild_id", urlencodedParser, async (req, res) => {
   
-  
+  db.findOne({guild_id: req.params.guild_id}, async (err, data) => {
+    
+    if (data) {
+      let newCode = req.data.code;
+      data.code = newCode;
+      data.guild.code = newCode;
+      data.save()
+      
+      let newInviteURL = req.data.invite;
+      if (!newInviteURL) return res.redirect(`/dashboard/${req.params.guild_id}`)
+      
+      if (!newInviteURL.startsWith("https://discord.gg/")) return res.redirect(`/dashboard/${req.params.guild_id}`);
+      
+      data.guild.redirect = newInviteURL;
+      data.save()
+      
+      
+
+      
+      return res.redirect(`/dashboard/${req.params.guild_id}`)
+      
+    } else {
+      res.redirect("/dashboard")
+    }
+    
+  })
   
 });
 

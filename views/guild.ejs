@@ -24,11 +24,11 @@
         
 <!--      Code    -->
         <label for="code"><strong>Code</strong></label>
-        <input class="form-control form-control-lg" type="text" id="code" value="<%= data.code %>">
+        <input class="form-control form-control-lg" type="text" id="code" value="<%= data.code %>" required>
         
 <!--      Invite URL    -->
         <label for="invite"><strong>Invite URL (Permanent link)</strong></label>
-        <input class="form-control form-control-lg" type="url" id="invite" value="<%= data.guild.redirect %>">
+        <input class="form-control form-control-lg" type="url" id="invite" value="<%= data.guild.redirect %>" required>
         
         <p align="center">
           <button class="btn btn-outline-dark my-btn" onclick="check()">Save</button>
@@ -43,7 +43,7 @@
   
     function check() {
     let inviteUrl = document.getElementById("invite").value;
-    if (!inviteUrl.includes("https://discord.gg")) return alert("Please provide valid url")
+    if (!inviteUrl.startsWith("https://discord.gg/")) return alert("Please provide valid url")
       
     return document.href="/dashboard/<%= req.params.guild_id %>"
     }
