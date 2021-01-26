@@ -3,7 +3,7 @@
   <head>
     <title>URLCORD.CF</title>
     <link rel="icon" href="https://cdn.discordapp.com/avatars/<%= client.user.id %>/<%= client.user.avatar %>.png?size=4096">
-    <link rel="stylesheet" href="style/.css">
+    <link rel="stylesheet" href="/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
@@ -18,20 +18,35 @@
   </head>
   <body>
     
-    <form>
+    <form method="post">
       
       <div class="form-box">
         
 <!--      Code    -->
-        <label for="code">Code</label>
+        <label for="code"><strong>Code</strong></label>
         <input class="form-control form-control-lg" type="text" id="code" value="<%= data.code %>">
         
 <!--      Invite URL    -->
-        <label for="invite">Invite URL (Permanent link)</label>
-        <input class="form-control form-control-lg" type="text" id="invite" value="<%= data.guild.redirect %>">
+        <label for="invite"><strong>Invite URL (Permanent link)</strong></label>
+        <input class="form-control form-control-lg" type="url" id="invite" value="<%= data.guild.redirect %>">
+        
+        <p align="center">
+          <button class="btn btn-outline-dark my-btn" onclick="check()">Save</button>
+        </p>
       </div>
       
     </form>
     
   </body>
+  
+  <script>
+  
+    function check() {
+    let inviteUrl = document.getElementById("invite").value;
+    if (!inviteUrl.includes("https://discord.gg")) return alert("Please provide valid url")
+      
+    return document.href="/dashboard/<%= req.params.guild_id %>"
+    }
+  
+  </script>
 </html>

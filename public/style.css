@@ -33,6 +33,10 @@ body {
   }
 }
 
+.form-box {
+  margin: 20px;
+}
+
 @media (min-width: 992px) { 
 
   .my-img {

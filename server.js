@@ -78,6 +78,12 @@ app.get("/dashboard/:guild_id", checkAuth, async (req, res) => {
   })
 });
 
+app.post("/dashboard/:guild_id", checkAuth, async (req, res) => {
+  
+  
+  
+});
+
 
 
 app.get("/", (req, res) => {
