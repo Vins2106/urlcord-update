@@ -89,18 +89,18 @@ app.post("/dashboard/:guild_id", urlencodedParser, async (req, res) => {
     
     if (data) {
       let newCode = req.body.code;
-      data.code = newCode;
-      data.guild.code = newCode;
-      data.save()
       
       let newInviteURL = req.body.invite;
       if (!newInviteURL) return res.redirect(`/dashboard/${req.params.guild_id}`)
       
-      if (!newInviteURL.startsWith("https://discord.gg/")) return res.redirect(`/dashboard/${req.params.guild_id}`);
+      if (!inviteUrl.startsWith("https://discord.gg/")) return res.redirect(`/dashboard/${req.params.guild_id}`);
       
       data.guild.redirect = newInviteURL;
+      data.code = newCode;
+      data.guild.code = newCode;
       data.save()
       
+      console.log(`Data has been changes for ${data.guild.id}`)
       
 
       
