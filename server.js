@@ -64,9 +64,7 @@ app.get("/dashboard", checkAuth, async (req, res) => {
 });
 
 app.get("/dashboard/:guild_id", checkAuth, async (req, res) => {
-  if (!client.guilds.cache.get(req.params.guild_id) || !client.guilds.cache.get(req.params.guild_id).members.cache.get(req.user.id).hasPermission("ADMINISTRATOR")) return res.send('<script>alert("You are not able to manage this server")</script>').then(() => {
-    setTimeout(function)
-  })
+  if (!client.guilds.cache.get(req.params.guild_id) || !client.guilds.cache.get(req.params.guild_id).members.cache.get(req.user.id).hasPermission("ADMINISTRATOR")) return res.redirect("/dashboard")
   
   db.findOne({guild_id: req.params.guild_id}, async (err, data) => {
     
