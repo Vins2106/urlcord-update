@@ -49,8 +49,7 @@ let db = require("./database.js");
 app.use(express.static("public"));
 
 app.get("/dashboard", checkAuth, async (req, res) => {
-  let guildsData = req.user.guilds; 
-
+  let guildsData = req.user.guilds;
    
   res.render("dashboard.ejs", {
     req: req,
