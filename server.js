@@ -91,6 +91,9 @@ app.post("/dashboard/:guild_id", urlencodedParser, async (req, res) => {
       var newCode = req.body.code;
       if (!newCode) newCode = data.code;
       
+      var newInvite = req.body.invite;
+      if (!newInvite.startsWith("https://discord.gg/")) newInvite = data.guild.redirect;
+      
       data.code = newCode;
       data.guild.code = newCode;
       data.save()
@@ -99,7 +102,7 @@ app.post("/dashboard/:guild_id", urlencodedParser, async (req, res) => {
       
 
       
-      res.redirect(`/dashboard`)
+      res.redirect(`/dashboard/${req.params.guild_id}`)
       
     } else {
       res.redirect("/dashboard")

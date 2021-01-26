@@ -22,26 +22,22 @@
     
     <br>
     <br>
-    <br>
-    <br>
     
     
 <div class="card-columns">
   
   <% guild.map(guild => { %>
   <% if (!client.guilds.cache.get(guild.id)) return; %>
-  
   <div class="card">
     <div class="card-body">
       <h5 class="card-title"><%= guild.name %></h5>
       <p class="card-text"><button class="btn btn-outline-dark my-btn-db" onclick="document.location='/dashboard/<%= guild.id %>'">Manage</button></p>    
     </div>
     <div class="card-footer">
-      <small class="text-muted">This server do not setup</small>
+      <small class="text-muted">Need administrator permission</small>
     </div>
   </div>    
-  <% }) %>
   
-</div> 
+  <% }) %>
   </body>
 </html>
