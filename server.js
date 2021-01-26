@@ -88,14 +88,9 @@ app.post("/dashboard/:guild_id", urlencodedParser, async (req, res) => {
   db.findOne({guild_id: req.params.guild_id}, async (err, data) => {
     
     if (data) {
-      let newCode = req.body.code;
+      var newCode = req.body.code;
+      if (!newCode) newCode = data.code;
       
-      let newInviteURL = req.body.invite;
-      if (!newInviteURL) return res.redirect(`/dashboard/${req.params.guild_id}`)
-      
-      if (!inviteUrl.startsWith("https://discord.gg/")) return res.redirect(`/dashboard/${req.params.guild_id}`);
-      
-      data.guild.redirect = newInviteURL;
       data.code = newCode;
       data.guild.code = newCode;
       data.save()
@@ -104,7 +99,7 @@ app.post("/dashboard/:guild_id", urlencodedParser, async (req, res) => {
       
 
       
-      return res.redirect(`/dashboard/${req.params.guild_id}`)
+      res.redirect(`/dashboard`)
       
     } else {
       res.redirect("/dashboard")
