@@ -64,7 +64,9 @@ app.get("/dashboard", checkAuth, async (req, res) => {
 });
 
 app.get("/dashboard/:guild_id", checkAuth, async (req, res) => {
-  if (!client.guilds.cache.get(req.params.guild_id) || !client.guilds.cache.get(req.params.guild_id).members.cache.get(req.user.id).hasPermission("ADMINISTRATOR")) return;
+  if (!client.guilds.cache.get(req.params.guild_id) || !client.guilds.cache.get(req.params.guild_id).members.cache.get(req.user.id).hasPermission("ADMINISTRATOR")) return res.send('<script>alert("You are not able to manage this server")</script>').then(() => {
+    setTimeout(function)
+  })
   
   db.findOne({guild_id: req.params.guild_id}, async (err, data) => {
     
@@ -88,12 +90,12 @@ app.post("/dashboard/:guild_id", urlencodedParser, async (req, res) => {
   db.findOne({guild_id: req.params.guild_id}, async (err, data) => {
     
     if (data) {
-      let newCode = req.data.code;
+      let newCode = req.body.code;
       data.code = newCode;
       data.guild.code = newCode;
       data.save()
       
-      let newInviteURL = req.data.invite;
+      let newInviteURL = req.body.invite;
       if (!newInviteURL) return res.redirect(`/dashboard/${req.params.guild_id}`)
       
       if (!newInviteURL.startsWith("https://discord.gg/")) return res.redirect(`/dashboard/${req.params.guild_id}`);
