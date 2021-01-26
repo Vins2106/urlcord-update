@@ -20,33 +20,16 @@
     
 <div class="card-columns">
   
-  <% guilds.map(guild => { %>
-  
+  <% guild.map(guild => { %>
   <div class="card">
     <div class="card-body">
       <h5 class="card-title"><%= guild.name %></h5>
-      <p class="card-text"><button class="btn btn-outline-dark my-btn-db" onclick="document.location='/dashboard/<%= guild.id %>'">Manage</button></p>
-    </div>
-    <div class="card-footer">
-      <small class="text-muted">https://urlcord.cf/<%= data.code %></small>
-    </div>
-  </div>    
-  
-  <% }) %>
-  
-  <% unguilds.map(guild => { %>
-  <div class="card">
-    <div class="card-body">
-      <h5 class="card-title"><%= guild.name %></h5>
-      <form>
-      <p class="card-text"><button class="btn btn-outline-dark my-btn-db">Setup</button></p>
-      </form>
-    </div>
+      <p class="card-text"><button class="btn btn-outline-dark my-btn-db" onclick="">Setup</button></p>    </div>
     <div class="card-footer">
       <small class="text-muted">This server do not setup</small>
     </div>
-  </div>      
-  <% })%>
+  </div>    
+  <% }) %>
   
 </div> 
   </body>

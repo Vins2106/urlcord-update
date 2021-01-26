@@ -50,37 +50,13 @@ app.use(express.static("public"));
 
 app.get("/dashboard", checkAuth, async (req, res) => {
   let guildsData = req.user.guilds; 
-  
-  let guildss = []
-  let unguilds = [];
-  let guilds = [];
-  
-  guildsData.forEach(guild => {
-    if (!client.guilds.cache.get(guild.id) || !client.guilds.cache.get(guild.id).members.cache.get(req.user.id).hasPermission("ADMINISTRATOR")) return;
-    
-    guildss.push(guild)
-  })
-  
-  guilds.map(guild => {
-    
-    db.findOne({guild_id: guild.id}, async (err, data) => {
-      
-      if (data) {
-        guilds.push(guild)
-      } else {
-        unguilds.push(guild)
-      }
-      
-    });
-    
-  });
+
    
   res.render("dashboard.ejs", {
     req: req,
     res: res,
     db: db,
-    unguilds: unguilds,
-    guilds: guilds,
+    guild: guildsData,
     client: client
   })
 });
