@@ -5,7 +5,8 @@ module.exports = model(
     guild_id: String,
     code: String,
     used: Number,
-    guild: {id: String, code: String, redirect: String},
+    description: String,
+    guild: {data: String, name: String, id: String, code: String, redirect: String},
     user: {id: String, tag: String, username: String}
   })
 );
