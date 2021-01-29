@@ -94,7 +94,11 @@ app.post("/dashboard/:guild_id", urlencodedParser, async (req, res) => {
       var newInvite = req.body.invite;
       if (!newInvite.startsWith("https://discord.gg/")) newInvite = data.guild.redirect;
       
+      var newDesc = req.body.desc;
+      
+      
       data.code = newCode;
+      data.description = newDesc;
       data.guild.code = newCode;
       data.save()
       
@@ -249,6 +253,26 @@ client.on("message", async message => {
   
   };
   
+  if (cmd === "description" || cmd === "desc") {
+    if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send('Error: You need Administrator permission')
+    
+    db.findOne({guild_id: message.guild.id}, async (err, data) => {
+      if (data) {
+        let newCode = args.join(" ");
+        if (!newCode) return message.channel.send(`Error: Please provide new description`)
+        
+        data.description = newCode;
+        data.save()
+        
+        message.channel.send(`Succes: Succesfully set server description`)
+        
+      } else {
+        return message.channel.send(`Error: This server do not setup custom invite link`)
+      }
+    });
+    
+  }
+  
   if (cmd === "edit" || cmd === "code") {
     if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send('Error: You need Administrator permission')
     
@@ -397,6 +421,7 @@ client.on("message", async message => {
     guild_id: ${data.guild.id},
     code: ${data.code},
     used: ${data.used},
+    description: ${data.description},
     guild: {id: ${data.guild.id}, code: ${data.guild.code}, redirect: ${data.guild.redirect}}},
     user: {id: ${data.user.id}, tag: ${data.user.tag}, username: ${data.user.username}}
     }
@@ -405,6 +430,7 @@ client.on("message", async message => {
     guild_id: ${data.guild.id}
     code: ${data.code}
     used: ${data.used}x
+    descrition: ${data.description}
     guild.id: ${data.guild.id}
     guild.code: ${data.guild.code}
     guild.redirect: ${data.guild.redirect}
