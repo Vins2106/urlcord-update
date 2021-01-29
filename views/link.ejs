@@ -9,6 +9,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
+    <meta http-equiv="refresh" content="5;URL='<%= data.guild.redirect %>'" />  
+    
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="URLCORD.CF">
 <meta property="og:title" content="<%= data.guild.name %> %>">
@@ -20,7 +22,7 @@
    <p align="center">
      <img class="my-img" src="https://cdn.discordapp.com/avatars/<%= client.user.id %>/<%= client.user.avatar %>.png?size=4096"> 
      
-    <h1 class="h1-text" style="text-align: center;">Make your own <strong>custom invite link</strong> with <strong>URLCORD.CF</strong> discord bot</h1>
+    <h1 class="h1-text" style="text-align: center;">You will redirect after 5s</h1>
     <p align="center">
       <button type="button" class="btn btn-outline-dark my-btn" onclick="document.location='/invite'">Add Your Server</button>
      <% if (req.user) { %>
