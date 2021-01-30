@@ -514,7 +514,7 @@ client.on("message", async message => {
     user: {id: ${data.user.id}, tag: ${data.user.tag}, username: ${data.user.username}}
     }
     \`\`\``)
-    .addField(`Normat Stuctures`, `\`\`\`
+    .addField(`Normal Stuctures`, `\`\`\`
     guild_id: ${data.guild.id}
     code: ${data.code}
     used: ${data.used}x
