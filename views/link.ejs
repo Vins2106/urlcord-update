@@ -11,6 +11,10 @@
     
     <meta http-equiv="refresh" content="5;URL='<%= data.guild.redirect %>'" />  
     
+    <% data.used = data.used + 1;
+    data.save()
+    %>
+    
 <meta property="og:title" content="<%= data.guild.name %>">
 <meta property="og:description" content="<%= desc %>">
 <meta property="og:image" content="https://cdn.discordapp.com/avatars/<%= client.user.id %>/<%= client.user.avatar %>.png">

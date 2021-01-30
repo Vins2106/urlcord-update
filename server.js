@@ -138,9 +138,6 @@ app.get("/:code", async (req, res) => {
     
     if (data) {
       
-      data.used = data.used + 1;
-      data.save()
-      
       if (!data.guild.name) return res.send({error: "This guild is not up to date, try to resetup"})
       
       let desc = data.description;
