@@ -301,6 +301,17 @@ client.on("message", async message => {
           
           
 
+          try {
+          if (cmd.find(x => x.name == search.toLowerCase())) {
+            let x = cmd.find(x => x.name == search.toLowerCase());
+            
+            message.channel.send(`Name: **${x.name}**\nDescription: **${x.description}**`)
+          } else {
+            return message.channel.send(`Not found.`)
+          }            
+          } catch (e) {
+            return message.channel.send(`Oh no: ${e}`)
+          }
           
           
           break;
