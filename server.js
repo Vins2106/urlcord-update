@@ -9,7 +9,6 @@ const  Strategy = require("passport-discord").Strategy;
 let bodyParser = require("body-parser");
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
-
 // Discord Login
 passport.serializeUser(function(user, done) {
   done(null, user);
