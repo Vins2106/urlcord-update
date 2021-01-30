@@ -252,10 +252,10 @@ client.on("message", async message => {
 };
           
           m.delete();
-          const msg = await message.channel.send("**Search commands**\n type something to search commands")
+          const msg = await message.channel.send("**Search commands**\ntype something to search commands")
           
           
-          let query = await message.channel.awaitMessages(filter, {max: 1, time: 60000});
+          let query = await message.channel.awaitMessages(filter2, {max: 1, time: 60000});
           if (!query.size) return msg.edit("Canceled");
           
           let search = query.first().content;
@@ -300,9 +300,8 @@ client.on("message", async message => {
           ]
           
           
-          if (cmd.slice().name.includes(search)) {
-            
-          }
+
+          
           
           break;
       }
