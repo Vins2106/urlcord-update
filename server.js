@@ -232,11 +232,82 @@ client.on("message", async message => {
     .addField(`${prefix}tutorial`, 'Get the tutorial embed')
     .addField(`${prefix}information`, 'Get this server url info')
     .addField(`${prefix}description`, 'Set server description')
-    .setFooter(`©️ URLCORD.CF - 2021 | [] required, <> optional`)
+    .setFooter(`©️ URLCORD.CF - 2021 | [] required, <> optional | reach with 🔎 to search commands`)
     
     let m = await message.channel.send(embed);
     
-    m.react("")
+    m.react("🔎")
+    
+    const filter = (reaction, user) => user.id !== client.user.id && user.id === message.author.id;
+    var collector = m.createReactionCollector(filter)
+    collector.on("collect", async (reaction, user) => {
+      
+      switch (reaction.emoji.name) {
+        case "🔎":
+          
+  const filter2 = x => {
+
+    return (x.author.id === message.author.id);
+
+};
+          
+          m.delete();
+          const msg = await message.channel.send("**Search commands**\n type something to search commands")
+          
+          
+          let query = await message.channel.awaitMessages(filter, {max: 1, time: 60000});
+          if (!query.size) return msg.edit("Canceled");
+          
+          let search = query.first().content;
+          
+          let cmd = [
+            {
+              name: "help",
+              description: "Get all commands"
+            },
+            {
+              name: "set",
+              description: "Set this server invite url"
+            },
+            {
+              name: "edit",
+              description: "Edit this server custom invite code"
+            },
+            {
+              name: "setup",
+              description: "Setup the own invite url"
+            },
+            {
+              name: "unsetup",
+              description: "Unsetup this server custom invite url or delete"
+            },
+            {
+              name: "link",
+              description: "Get this server own invite link"
+            },
+            {
+              name: "tutorial",
+              description: "Get the tutorial embed"
+            },
+            {
+              name: "information",
+              description: "Get this server url info"
+            },
+            {
+              name: "description",
+              description: "Set server description"
+            },
+          ]
+          
+          
+          if (cmd.slice().name.includes(search)) {
+            
+          }
+          
+          break;
+      }
+      
+    })
   };
   
   if (cmd === "set" || cmd === "channel") {
