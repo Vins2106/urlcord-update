@@ -46,6 +46,7 @@ app.get('/callback',
 
 // database mongodb;
 let db = require("./database.js");
+let tkn = require("./token.js");
 
 // web system
 app.use(express.static("public"));
@@ -175,8 +176,6 @@ client.on("ready", () => {
 let config = process.env;
 
 client.login(config.token);
-
-client.on
 
 client.on("guildDelete", async guild => {
   
@@ -537,7 +536,28 @@ client.on("message", async message => {
   }
   
   if (cmd === "chatbot" || cmd === "cb") {
+    message.channel.send(`I send something to your dm`).then(x => x.delete({timeout: 5000}))
     
+    tkn.findOne({user_id: message.author.id}, async (err, data) => {
+      
+      if (data) {
+        if (args[0] === "regenerate") {
+          let newToken = makeid(18);
+          data.token = newToken;
+          data.save()
+          
+          return message.member.send(`Succesfully regenerate:\n||${newToken}||\nhttps://urlcord.cf/`)
+        }
+        
+        return message.member.send(`**You already have token!**\n||${data.token}||\n__Dont make people know this token, just you__`)
+      } else {
+        let token = makeid(18);
+        let newDb = new tkn({
+          user_id: message.author.id
+        })
+      }
+      
+    });
   }
   
 });
