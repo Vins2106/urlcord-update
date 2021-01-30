@@ -202,9 +202,14 @@ mongoose.connect(config.mongo, {
 
 client.on("message", async message => {
   if (message.author.bot) return;
+  
   if (message.channel.type === "dm") return;
   
   let prefix = "url"
+  
+  if (message.content.toLowerCase() === `<@${client.user.id}>` || message.content.toLowerCae() === `<@!${client.user.id}>`) {
+    message.channel.send(`Hello **${message.author.username}**! You need my prefix? my prefix is **${prefix}**`)
+  }  
   
   if (!message.content.startsWith(prefix)) return;
   
@@ -363,7 +368,7 @@ client.on("message", async message => {
   };
   
   if (cmd === "unsetup" || cmd === "off" || cmd === "disable") {
-    if (!message.member.hasPermission("ADMINISTRATOR")) return message.channnel.send("Error: You need Administrator permission");
+    if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send("Error: You need Administrator permission");
     
     db.findOne({guild_id: message.guild.id}, async (err, data) => {
       
