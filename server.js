@@ -207,7 +207,7 @@ client.on("message", async message => {
   
   let prefix = "url"
   
-  if (message.content.toLowerCase() === `<@${client.user.id}>` || message.content.toLowerCae() === `<@!${client.user.id}>`) {
+  if (message.content.toLowerCase() === `<@${client.user.id}>` || message.content.toLowerCase() === `<@!${client.user.id}>`) {
     message.channel.send(`Hello **${message.author.username}**! You need my prefix? my prefix is **${prefix}**`)
   }  
   
