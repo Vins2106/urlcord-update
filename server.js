@@ -231,9 +231,12 @@ client.on("message", async message => {
     .addField(`${prefix}link`, 'Get this server own invite link')
     .addField(`${prefix}tutorial`, 'Get the tutorial embed')
     .addField(`${prefix}information`, 'Get this server url info')
+    .addField(`${prefix}description`, 'Set server description')
     .setFooter(`©️ URLCORD.CF - 2021 | [] required, <> optional`)
     
-    message.channel.send(embed);
+    let m = await message.channel.send(embed);
+    
+    m.react("")
   };
   
   if (cmd === "set" || cmd === "channel") {
