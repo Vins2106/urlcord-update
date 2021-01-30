@@ -149,7 +149,7 @@ http://api.brainshop.ai/get?bid=153852&key=dfJVP7Jdd8TVZPdE&uid=${data.user_id}}
         res.status(200).send({message: {content: data.cnt}})
       });        
       } else {
-        res.status(400).send({error: "We have some problem, try again."})
+        res.status(400).send({error: "We have some problem, try to provide your token"})
       }
       
     });
@@ -578,7 +578,7 @@ client.on("message", async message => {
         });
         newDb.save();
         
-        return message.member.send(`**Welcome to URLCORD.CF chat bot !!**\n**You can make your discord bot can chatting**\ntoken: ||${token}||\n__Dont make people know this token, just you.__\nhttps://urlcord.cf/chatbot?token=${data.token}&msg=hello`)
+        return message.member.send(`**Welcome to URLCORD.CF chat bot !!**\n**You can make your discord bot can chatting**\ntoken: ||${token}||\n__Dont make people know this token, just you.__\nhttps://urlcord.cf/chatbot?token=${token}&msg=hello`)
       }
       
     });
