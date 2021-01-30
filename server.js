@@ -101,7 +101,7 @@ app.post("/dashboard/:guild_id", urlencodedParser, async (req, res) => {
       data.guild.code = newCode;
       data.save()
       
-      console.log(`Data has been changes for ${data.guild.id}`)
+      console.log(`Data has been changes for ${data.guild.name} [${data.guild.id}]`)
       
 
       
