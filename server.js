@@ -534,7 +534,11 @@ client.on("message", async message => {
       }
       
     })
-  }       
+  }
+  
+  if (cmd === "chatbot" || cmd === "cb") {
+    
+  }
   
 });
 
