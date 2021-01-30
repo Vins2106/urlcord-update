@@ -149,7 +149,7 @@ app.get("/:code", async (req, res) => {
         req: req,
         res: res,
         data: data,
-        db: db,
+        db: db, 
         client: client,
         desc: desc
       })
