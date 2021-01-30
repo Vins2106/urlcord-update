@@ -131,12 +131,32 @@ app.get("/invite", async (req, res) => {
   res.redirect("https://discord.com/oauth2/authorize?client_id=802918584497733632&permissions=8&scope=bot")
 });
 
+  app.get("/chatbot", async (req, res) => {
+    let token = req.query.token;
+    if (!token) return res.status(404).send({error: "You need provide token! ?token=<Your_token>"});
+    
+    let msg = req.query.msg;
+    if (!msg) msg = "hello";
+    const fetch = require("node-fetch");
+    
+    tkn.findOne({token: token}, async (err, data) => {
+      
+      if (data) {
+    const text = await fetch(`
+http://api.brainshop.ai/get?bid=153852&key=dfJVP7Jdd8TVZPdE&uid=${data.user_id}}&msg=${encodeURIComponent(msg)}`)
+      .then(res => res.json())
+      .then(data => {
+        res.status(200).send({message: {content: data.cnt}})
+      });        
+      } else {
+        res.status(400).send({error: "We have some problem, try again."})
+      }
+      
+    });
+  });
+
 app.get("/:code", async (req, res) => {
   db.findOne({ code: req.params.code }, async (err, data) => {
-    if (err) {
-      return res.json({ error: "Unable to find this code on database."})
-    }
-    
     if (data) {
       
       if (!data.guild.name) return res.send({error: "This guild is not up to date, try to resetup"})
@@ -546,15 +566,19 @@ client.on("message", async message => {
           data.token = newToken;
           data.save()
           
-          return message.member.send(`Succesfully regenerate:\n||${newToken}||\nhttps://urlcord.cf/`)
+          return message.member.send(`Succesfully regenerate:\n||${newToken}||\nhttps://urlcord.cf/chatbot?token=${newToken}&msg=hello`)
         }
         
-        return message.member.send(`**You already have token!**\n||${data.token}||\n__Dont make people know this token, just you__`)
+        return message.member.send(`**You already have token!**\n||${data.token}||\n__Dont make people know this token, just you.__\nhttps://urlcord.cf/chatbot?token=${data.token}&msg=hello`)
       } else {
         let token = makeid(18);
         let newDb = new tkn({
-          user_id: message.author.id
-        })
+          user_id: message.author.id,
+          token: token
+        });
+        newDb.save();
+        
+        return message.member.send(`**Welcome to URLCORD.CF chat bot !!**\n**You can make your discord bot can chatting**\ntoken: ||${token}||\n__Dont make people know this token, just you.__\nhttps://urlcord.cf/chatbot?token=${data.token}&msg=hello`)
       }
       
     });
