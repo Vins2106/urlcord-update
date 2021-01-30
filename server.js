@@ -143,12 +143,15 @@ app.get("/:code", async (req, res) => {
       
       if (!data.guild.name) return res.send({error: "This guild is not up to date, try to resetup"})
       
+      let desc = data.description;
+      
       return res.render("link.ejs", {
         req: req,
         res: res,
         data: data,
         db: db,
-        client: client
+        client: client,
+        desc: desc
       })
       
     } else if (!data) {

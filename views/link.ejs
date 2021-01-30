@@ -11,18 +11,18 @@
     
     <meta http-equiv="refresh" content="5;URL='<%= data.guild.redirect %>'" />  
     
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="URLCORD.CF">
-<meta property="og:title" content="<%= data.guild.name %> %>">
-<meta property="og:description" content="<%= data.description %>">
-<meta name="theme-color" content="#05eeff">
+<meta property="og:title" content="<%= data.guild.name %>">
+<meta property="og:description" content="<%= desc %>">
+<meta property="og:image" content="https://cdn.discordapp.com/avatars/<%= client.user.id %>/<%= client.user.avatar %>.png">
+<meta property="og:url" content="https://">
+<meta name="twitter:card" content="summary_large_image">
     
   </head>
   <body>
    <p align="center">
      <img class="my-img" src="https://cdn.discordapp.com/avatars/<%= client.user.id %>/<%= client.user.avatar %>.png?size=4096"> 
      
-    <h1 class="h1-text" style="text-align: center;">You will redirect in <strong id="count">5</strong></h1>
+    <h1 class="h1-text" style="text-align: center;">You will redirect in <strong id="count">5</strong>s</h1>
     <p align="center">
       <button type="button" class="btn btn-outline-dark my-btn" onclick="document.location='/invite'">Add Your Server</button>
      <% if (req.user) { %>
@@ -33,7 +33,7 @@
     </p>
   </body>
   
-  <script type="text.javascript">
+  <script type="text/javascript">
   var count = 5;
   
   setInterval(function() {
