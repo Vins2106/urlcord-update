@@ -171,14 +171,6 @@ let client = new Discord.Client({
 
 client.on("ready", () => {
   console.log(`Ready to handle all url`);
-  
-  let status = [{name: "indonesia", type: "WATCHING"}, {name: "all url", type: "WATCHING"}];
-  
-  setInterval(function() {
-    let s = status[Math.floor(Math.random() * status.length)];
-    
-    client.user.setActivity(s.name, {type: s.type})
-  }, 5000);
 });
 
 // Bot
