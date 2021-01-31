@@ -146,7 +146,7 @@ app.get("/invite", async (req, res) => {
 http://api.brainshop.ai/get?bid=153852&key=dfJVP7Jdd8TVZPdE&uid=${data.user_id}}&msg=${encodeURIComponent(msg)}`)
       .then(res => res.json())
       .then(data => {
-        res.status(200).send({message: {content: data.cnt}})
+        res.status(200).send({message: {content: msg, reply: data.cnt}})
       });        
       } else {
         res.status(400).send({error: "We have some problem, please provide valid token, try to generate token or regenerate token"})
