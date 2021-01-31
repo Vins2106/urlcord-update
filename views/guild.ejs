@@ -32,14 +32,14 @@
         
 <!--      Code    -->
         <label for="code"><strong>Code</strong></label>
-        <input class="form-control form-control-lg" type="text" id="code" name="code" value="<%= data.code %>" required>
+        <input class="form-control form-control-lg" type="text" id="code" name="code" value="<%= data.code %>" placeholder="<%= data.code %>" required>
         
 <!--      Invite URL    -->
         <label for="invite"><strong>Invite URL (Permanent link)</strong></label>
-        <input class="form-control form-control-lg" type="url" id="invite" name="invite" value="<%= data.guild.redirect %>" required>
+        <input class="form-control form-control-lg" type="url" id="invite" name="invite" value="<%= data.guild.redirect %>" placeholder="<%= data.guild.redirect %>" required>
         
        <label for="desc">Description</label>
-       <textarea class="form-control" id="desc" name="desc" rows="3" required></textarea>
+       <textarea class="form-control" id="desc" name="desc" rows="3" placeholder="<%= data.description %>" required><%= data.description %></textarea>
 
         
         <p align="center">
