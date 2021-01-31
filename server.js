@@ -183,13 +183,15 @@ const listener = app.listen(process.env.PORT, () => {
 });
 
 let Discord = require("discord.js");
+
+// Mobile Status
+const Constants = require('discord.js/src/util/Constants.js');
+Constants.DefaultOptions.ws.properties.$browser = "Discord Android"
 let client = new Discord.Client({
   disableMentions: "everyone"
 });
 
 client.on("ready", () => {
-  Discord.Constants.DefaultOptions.ws.properties.$browser = "Discord Andoroid"
-  
   console.log(`Ready to handle all url`);
 });
 
