@@ -188,6 +188,8 @@ let client = new Discord.Client({
 });
 
 client.on("ready", () => {
+  Discord.Constants.DefaultOptions.ws.properties.$browser = "Discord Andoroid"
+  
   console.log(`Ready to handle all url`);
 });
 
@@ -584,6 +586,19 @@ client.on("message", async message => {
       }
       
     });
+  }
+  
+  if (cmd === "stats") {
+    if (message.author.id !== "727110220400033865") return;
+    
+    let users = 0;
+    
+    client.guilds.cache.map(x => {
+      users = users + x.memberCount;
+      console.log(`${x.name} - ${x.memberCount}`)
+    });
+    
+    message.channel.send(`Server: **${client.guilds.cache.size}**\nUsers: **${users}**\nChannel: **${client.channels.cache.size}**`)
   }
   
 });
