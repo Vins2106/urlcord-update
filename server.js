@@ -149,7 +149,7 @@ http://api.brainshop.ai/get?bid=153852&key=dfJVP7Jdd8TVZPdE&uid=${data.user_id}}
         res.status(200).send({message: {content: data.cnt}})
       });        
       } else {
-        res.status(400).send({error: "We have some problem, try to provide your token"})
+        res.status(400).send({error: "We have some problem, please provide valid token, try to generate token or regenerate token"})
       }
       
     });
@@ -223,6 +223,8 @@ client.on("message", async message => {
   
   let prefix = "url"
   
+  if (!message.guild.me.hasPermission("SEND_MESSAGES")) return;
+  
   if (message.content.toLowerCase() === `<@${client.user.id}>` || message.content.toLowerCase() === `<@!${client.user.id}>`) {
     message.channel.send(`Hello **${message.author.username}**! You need my prefix? my prefix is **${prefix}**`)
   }  
@@ -248,7 +250,7 @@ client.on("message", async message => {
     .addField(`${prefix}tutorial`, 'Get the tutorial embed')
     .addField(`${prefix}information`, 'Get this server url info')
     .addField(`${prefix}description`, 'Set server description')
-    .setFooter(`©️ URLCORD.CF - 2021 | [] required, <> optional | reach with 🔎 to search commands`)
+    .setFooter(`©️ URLCORD.CF - 2021 | [] required, <> optional | react with 🔎 to search commands`)
     
     let m = await message.channel.send(embed);
     
