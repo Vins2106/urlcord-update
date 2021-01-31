@@ -26,13 +26,9 @@
      <img class="my-img" src="https://cdn.discordapp.com/avatars/<%= client.user.id %>/<%= client.user.avatar %>.png?size=4096"> 
      
     <h1 class="h1-text" style="text-align: center;">You will redirect in <strong id="count">5</strong>s</h1>
+    <2 class="h2-text" style="text-align: center;">r</2>
     <p align="center">
       <button type="button" class="btn btn-outline-dark my-btn" onclick="document.location='/invite'">Add Your Server</button>
-     <% if (req.user) { %>
-      <button type="button" class="btn btn-outline-dark my-btn" onclick="document.location='/dashboard'">Dashboard</button>
-      <% } else { %>
-      <button type="button" class="btn btn-outline-dark my-btn" onclick="document.location='/login'">Login</button>
-      <% } %>
     </p>
   </body>
   
