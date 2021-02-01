@@ -256,6 +256,7 @@ client.on("message", async message => {
     .addField(`${prefix}description`, 'Set server description')
     .addField(`${prefix}chatbot`, 'Get chat bot api')
     .addField(`${prefix}stats`, 'Get bot stats')
+    .addField(`${prefix}ping`, 'Get bot ping')
     .setFooter(`©️ URLCORD.CF - 2021 | [] required, <> optional | react with 🔎 to search commands`)
     
     let m = await message.channel.send(embed);
@@ -321,6 +322,18 @@ client.on("message", async message => {
               name: "description",
               description: "Set server description"
             },
+            {
+              name: "ping",
+              description: "Get client ws ping"
+            },
+            {
+              name: "stats",
+              description: "Get bot stats"
+            },
+            {
+              name: "chatbot",
+              description: "Get chatbot api"
+            }
           ]
           
           
