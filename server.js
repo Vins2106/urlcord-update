@@ -344,6 +344,12 @@ client.on("message", async message => {
     })
   };
   
+  if (cmd === "ping") {
+    let m = await message.channel.send(`Pinging...`)
+    
+    m.edit(`:ping_pong: Pong!! **${client.ws.ping}**ms`)
+  }
+  
   if (cmd === "set" || cmd === "channel") {
     if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send("Error: You need Administrator permission");
     
@@ -511,6 +517,8 @@ client.on("message", async message => {
   }
   
   if (cmd === "tutorial" || cmd === "howto") {
+    let lang = false;
+    
     const en = new Discord.MessageEmbed()
     .setAuthor('How to tutorial', client.user.displayAvatarURL())
     .setColor(color)
@@ -527,7 +535,7 @@ client.on("message", async message => {
     .addField("Langkah 1", `tambahkan saya mengunakan [link ini](https://urlcord.cf/invite)`)
     .addField("Langkah 2", `beri saya izin create invite`)
     .addField("Langkah 3", `ketik **${prefix}setup <channel>** dan kamu akan mendapatkan default url`)
-    .addField("Langkah 4", `dan kamu bisa edit mengunaka **${prefix}edit <new_code>** command`)
+    .addField("Langkah 4", `dan kamu bisa edit mengunakan **${prefix}edit <new_code>** command`)
     .addField("Langkah 5", `selamat menikmati custom discord vanity urlnya :D`)
     .setFooter(`tambahkan saya di https://urlcord.cf | React untuk berpindah bahasa`)    
     
@@ -542,27 +550,22 @@ client.on("message", async message => {
       switch (reaction.emoji.name) {
         case "🔄":
           
-          let m2 = await message.channel.send(id)
+          if (!lang) {
+          reaction.users.remove(user)
+            
+          m.edit(id)
           
-          m2.react("🔄")
- 
-    const filter = (reaction, user) => user.id !== client.user.id && user.id === message.author.id;
-    var collector = m2.createReactionCollector(filter)
-    collector.on("collect", async (reaction, user) => {
-      
-      switch (reaction.emoji.name) {
-        case "🔄":
-          
-          let m3 = await message.channel.send(id)
-          
-          m2.react("🔄")
-          
-          
-          
-          break;
-      }
-      
-    })           
+            lang = true;
+            
+          } else if (lang) {
+            
+            reaction.users.remove(user)
+            
+            await m.edit(en)
+
+            lang = false;
+            
+          }      
           
           
           break;
