@@ -254,6 +254,8 @@ client.on("message", async message => {
     .addField(`${prefix}tutorial`, 'Get the tutorial embed')
     .addField(`${prefix}information`, 'Get this server url info')
     .addField(`${prefix}description`, 'Set server description')
+    .addField(`${prefix}chatbot`, 'Get chat bot api')
+    .addField(`${prefix}stats`, 'Get bot stats')
     .setFooter(`©️ URLCORD.CF - 2021 | [] required, <> optional | react with 🔎 to search commands`)
     
     let m = await message.channel.send(embed);
@@ -519,7 +521,9 @@ client.on("message", async message => {
     .addField("Step 5", `enjoy you custom invite url :D`)
     .setFooter(`add me on https://urlcord.cf`)
     
-    message.channel.send(embed)
+    let m = await message.channel.send(embed);
+    
+    m.react(":flag_id:")
   }
   
   if (cmd === "info" || cmd === "information" || cmd === "own") {
@@ -591,13 +595,10 @@ client.on("message", async message => {
   }
   
   if (cmd === "stats") {
-    if (message.author.id !== "727110220400033865") return;
-    
     let users = 0;
     
     client.guilds.cache.map(x => {
       users = users + x.memberCount;
-      console.log(`${x.name} - ${x.memberCount}`)
     });
     
     message.channel.send(`Server: **${client.guilds.cache.size}**\nUsers: **${users}**\nChannel: **${client.channels.cache.size}**`)
