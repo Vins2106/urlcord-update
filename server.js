@@ -511,7 +511,7 @@ client.on("message", async message => {
   }
   
   if (cmd === "tutorial" || cmd === "howto") {
-    const embed = new Discord.MessageEmbed()
+    const en = new Discord.MessageEmbed()
     .setAuthor('How to tutorial', client.user.displayAvatarURL())
     .setColor(color)
     .addField("Step 1", `add me to your server with [this link](https://urlcord.cf/invite)`)
@@ -519,11 +519,57 @@ client.on("message", async message => {
     .addField("Step 3", `type **${prefix}setup <channel>** and you will got default invite url`)
     .addField("Step 4", `and you can edit with **${prefix}edit <new_code>**`)
     .addField("Step 5", `enjoy you custom invite url :D`)
-    .setFooter(`add me on https://urlcord.cf`)
+    .setFooter(`add me on https://urlcord.cf | react for switching languages`)
     
-    let m = await message.channel.send(embed);
+    const id = new Discord.MessageEmbed()
+    .setAuthor('How to tutorial', client.user.displayAvatarURL())
+    .setColor(color)
+    .addField("Langkah 1", `tambahkan saya mengunakan [link ini](https://urlcord.cf/invite)`)
+    .addField("Langkah 2", `beri saya izin create invite`)
+    .addField("Langkah 3", `ketik **${prefix}setup <channel>** dan kamu akan mendapatkan default url`)
+    .addField("Langkah 4", `dan kamu bisa edit mengunaka **${prefix}edit <new_code>** command`)
+    .addField("Langkah 5", `selamat menikmati custom discord vanity urlnya :D`)
+    .setFooter(`tambahkan saya di https://urlcord.cf | React untuk berpindah bahasa`)    
     
-    m.react(":flag_id:")
+    let m = await message.channel.send(en);
+    
+    m.react("🔄")
+    
+    const filter = (reaction, user) => user.id !== client.user.id && user.id === message.author.id;
+    var collector = m.createReactionCollector(filter)
+    collector.on("collect", async (reaction, user) => {
+      
+      switch (reaction.emoji.name) {
+        case "🔄":
+          
+          let m2 = await message.channel.send(id)
+          
+          m2.react("🔄")
+ 
+    const filter = (reaction, user) => user.id !== client.user.id && user.id === message.author.id;
+    var collector = m2.createReactionCollector(filter)
+    collector.on("collect", async (reaction, user) => {
+      
+      switch (reaction.emoji.name) {
+        case "🔄":
+          
+          let m3 = await message.channel.send(id)
+          
+          m2.react("🔄")
+          
+          
+          
+          break;
+      }
+      
+    })           
+          
+          
+          break;
+      }
+      
+    })    
+    
   }
   
   if (cmd === "info" || cmd === "information" || cmd === "own") {
