@@ -241,6 +241,15 @@ client.on("message", async message => {
     .split(/ +/g);
   const cmd = args.shift().toLowerCase();
   
+  if (cmd === "invite" || cmd === "i") {
+    const embed = new Discord.MessageEmbed()
+    .setAuthor(client.user.username + "", client.user.displayAvatarURL())
+    .setColor(color)
+    .setDescription(`you can use [this link](https://urlcord.cf/invite) to invite me`)
+    
+    message.channel.send(embed)
+  }
+  
   if (cmd === "help" || cmd === "h" || cmd === "commands") {
     const embed = new Discord.MessageEmbed()
     .setAuthor('Make your own invite url', client.user.displayAvatarURL())
@@ -257,6 +266,7 @@ client.on("message", async message => {
     .addField(`${prefix}chatbot`, 'Get chat bot api')
     .addField(`${prefix}stats`, 'Get bot stats')
     .addField(`${prefix}ping`, 'Get bot ping')
+    .addField(`${prefix}invite`, 'Invite my bot')
     .setFooter(`©️ URLCORD.CF - 2021 | [] required, <> optional | react with 🔎 to search commands`)
     
     let m = await message.channel.send(embed);
@@ -333,6 +343,10 @@ client.on("message", async message => {
             {
               name: "chatbot",
               description: "Get chatbot api"
+            },
+            {
+              name: "invite",
+              description: "Invite me"
             }
           ]
           
