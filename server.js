@@ -378,23 +378,23 @@ client.on("message", async message => {
   }
   
   if (cmd === "set" || cmd === "channel") {
-    if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send("Error: You need Administrator permission");
+    if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send(embed("Error: You need Administrator permission"));
     
     let channel = message.mentions.channels.first();
-    if (!channel) return message.channel.send(`Error: You must mentions channel first.`);
+    if (!channel) return message.channel.send(embed(`Error: You must mentions channel first.`));
     
-    if (!message.guild.me.hasPermission("CREATE_INSTANT_INVITE")) return message.channel.send("Error: Im need Create Invite permission");
+    if (!message.guild.me.hasPermission("CREATE_INSTANT_INVITE")) return message.channel.send(embed("Error: Im need Create Invite permission"));
     
     db.findOne({guild_id: message.guild.id}, async (err, data) => {
       
       if (data) {
     const link = await channel.createInvite({maxAge: 0, maxUses: 0});
     
-    message.channel.send(`Succes: This server invite url channel has been set to ${channel}`);
+    message.channel.send(embed(`Succes: This server invite url channel has been set to ${channel}`));
         data.guild.redirect = `https://discord.gg/${link.code}`
         data.save()
       } else {        
-        return message.channel.send(`Error: This server do not setup, use **${prefix}setup** first.`)        
+        return message.channel.send(embed(`Error: This server do not setup, use **${prefix}setup** first.`)   )     
       }
       
     });
@@ -402,65 +402,65 @@ client.on("message", async message => {
   };
   
   if (cmd === "description" || cmd === "desc") {
-    if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send('Error: You need Administrator permission')
+    if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send(embed('Error: You need Administrator permission'))
     
     db.findOne({guild_id: message.guild.id}, async (err, data) => {
       if (data) {
         let newCode = args.join(" ");
-        if (!newCode) return message.channel.send(`Error: Please provide new description`)
+        if (!newCode) return message.channel.send(embed(`Error: Please provide new description`))
         
         data.description = newCode;
         data.save()
         
-        message.channel.send(`Succes: Succesfully set server description`)
+        message.channel.send(embed(`Succes: Succesfully set server description`))
         
       } else {
-        return message.channel.send(`Error: This server do not setup custom invite link`)
+        return message.channel.send(embed(`Error: This server do not setup custom invite link`))
       }
     });
     
   }
   
   if (cmd === "edit" || cmd === "code") {
-    if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send('Error: You need Administrator permission')
+    if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send(embed('Error: You need Administrator permission'))
     
     db.findOne({guild_id: message.guild.id}, async (err, data) => {
       if (data) {
         let newCode = args[0];
-        if (!newCode) return message.channel.send(`Error: Please provide new code`)
+        if (!newCode) return message.channel.send(embed(`Error: Please provide new code`))
         
         db.findOne({code: newCode}, async (err, datas) => {
           
           if (datas) {
-            return message.channel.send(`Error: This code (**${newCode}**) already have guild, try another code`)
+            return message.channel.send(embed(`Error: This code (**${newCode}**) already have guild, try another code`))
           } else {
             
             data.code = newCode;
             data.guild.code = newCode;
             data.save();
             
-            return message.channel.send(`Succes: Succesfully set server invite to https://urlcord.cf/${newCode}`)
+            return message.channel.send(embed(`Succes: Succesfully set server invite to https://urlcord.cf/${newCode}`))
             
           }
           
         });
         
       } else {
-        return message.channel.send(`Error: This server do not setup custom invite link`)
+        return message.channel.send(embed(`Error: This server do not setup custom invite link`))
       }
     });
     
   }
   
   if (cmd === "setup" || cmd === "on" || cmd === "enable") {
-    if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send("Error: You need Administrator permission");
+    if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send(embed("Error: You need Administrator permission"));
     
     const channel = message.mentions.channels.first() || message.channel;
     
     db.findOne({guild_id: message.guild.id}, async (err, data) => {
       
       if (data) {
-        return message.channel.send(`Error: This server already setup.`)
+        return message.channel.send(embed(`Error: This server already setup.`))
       } else {
         
         let code = "server" + makeid(2);
@@ -481,7 +481,7 @@ client.on("message", async message => {
         
         newData.save();
         
-        message.channel.send(`Succes: Succesfully setup, the default url is https://urlcord.cf/${code} you can edit with **${prefix}edit <new_code>**`);            
+        message.channel.send(embed(`Succes: Succesfully setup, the default url is https://urlcord.cf/${code} you can edit with **${prefix}edit <new_code>**`));            
           } else {
         const link = await channel.createInvite({maxAge: 0, maxUses: 0});
         
@@ -496,7 +496,7 @@ client.on("message", async message => {
         
         newData.save();
         
-        message.channel.send(`Succes: Succesfully setup, the default url is https://urlcord.cf/${code} you can edit with **${prefix}edit <new_code>**`);            
+        message.channel.send(embed(`Succes: Succesfully setup, the default url is https://urlcord.cf/${code} you can edit with **${prefix}edit <new_code>**`))        
           }
           
         }); 
@@ -509,7 +509,7 @@ client.on("message", async message => {
   };
   
   if (cmd === "unsetup" || cmd === "off" || cmd === "disable") {
-    if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send("Error: You need Administrator permission");
+    if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send(embed("Error: You need Administrator permission"));
     
     db.findOne({guild_id: message.guild.id}, async (err, data) => {
       
@@ -518,11 +518,11 @@ client.on("message", async message => {
         
         data.remove();
         
-        return message.channel.send(`Succes: Succesfully unsetup`)
+        return message.channel.send(embed(`Succes: Succesfully unsetup`))
         
       } else {
         
-        return message.channel.send(`Error: This server do not setup`)
+        return message.channel.send(embed(`Error: This server do not setup`))
         
       }
       
@@ -534,9 +534,9 @@ client.on("message", async message => {
     db.findOne({guild_id: message.guild.id}, async (err, data) => {
       
       if (data) {
-        return message.channel.send(`here: https://urlcord.cf/${data.guild.code}\nsetup by: ${data.user.tag} [${data.user.id}]`)
+        return message.channel.send(embed(`here: https://urlcord.cf/${data.guild.code}\nsetup by: ${data.user.tag} [${data.user.id}]`))
       } else {
-        return message.channel.send(`Error: This server do not setup`)
+        return message.channel.send(embed(`Error: This server do not setup`))
       }
       
     })
@@ -635,7 +635,7 @@ client.on("message", async message => {
     
     return message.channel.send(embed)
       } else {
-        return message.channel.send(`Error: This server do not setup`)
+        return message.channel.send(embed(`Error: This server do not setup`))
       }
       
     })
@@ -652,10 +652,10 @@ client.on("message", async message => {
           data.token = newToken;
           data.save()
           
-          return message.member.send(`Succesfully regenerate:\n||${newToken}||\nhttps://urlcord.cf/chatbot?token=${newToken}&msg=hello`)
+          return message.member.send(embed(`Succesfully regenerate:\n||${newToken}||\nhttps://urlcord.cf/chatbot?token=${newToken}&msg=hello`))
         }
         
-        return message.member.send(`**You already have token!**\n||${data.token}||\n__Dont make people know this token, just you.__\nhttps://urlcord.cf/chatbot?token=${data.token}&msg=hello`)
+        return message.member.send(embed(`**You already have token!**\n||${data.token}||\n__Dont make people know this token, just you.__\nhttps://urlcord.cf/chatbot?token=${data.token}&msg=hello`))
       } else {
         let token = makeid(18);
         let newDb = new tkn({
@@ -664,7 +664,7 @@ client.on("message", async message => {
         });
         newDb.save();
         
-        return message.member.send(`**Welcome to URLCORD.CF chat bot !!**\n**You can make your discord bot can chatting**\ntoken: ||${token}||\n__Dont make people know this token, just you.__\nhttps://urlcord.cf/chatbot?token=${token}&msg=hello`)
+        return message.member.send(embed(`**Welcome to URLCORD.CF chat bot !!**\n**You can make your discord bot can chatting**\ntoken: ||${token}||\n__Dont make people know this token, just you.__\nhttps://urlcord.cf/chatbot?token=${token}&msg=hello`))
       }
       
     });
@@ -677,7 +677,7 @@ client.on("message", async message => {
       users = users + x.memberCount;
     });
     
-    message.channel.send(`Server: **${client.guilds.cache.size}**\nUsers: **${users}**\nChannel: **${client.channels.cache.size}**`)
+    message.channel.send(embed(`Server: **${client.guilds.cache.size}**\nUsers: **${users}**\nChannel: **${client.channels.cache.size}**`))
   }
   
 });
@@ -698,22 +698,11 @@ function makeid(length) {
    return result;
 }
 
-async function error(message) {
+async function embed(message) {
   const embed = new Discord.MessageEmbed()
-  .setColor("RED")
-  .setDescription(message)
+  .setColor(color)
+  .setDescription(`${message}`)
+  .setFooter(`Optional Message`)
   
-  return `${message}`;
-}
-
-async function succes(message) {
-  const embed = new Discord.MessageEmbed()
-  .setColor("GREEN")
-  .setDescription(message)
-  
-  return `${message}`;
-}
-
-async function perms(permission) {
-  return error(`Error: Im need **${permission}** permission`)
+  return embed;
 }
