@@ -241,6 +241,29 @@ client.on("message", async message => {
     .split(/ +/g);
   const cmd = args.shift().toLowerCase();
   
+    let lastDaily = await db.get(`test.${message.author.id}`);
+    let buck = await db.get(`account.${message.author.id}.balance`);
+    let cooldown = 5000;
+    try {
+        
+        if (lastDaily !== null && cooldown - (Date.now() - lastDaily) > 0) {
+            let timeObj = ms(cooldown - (Date.now() - lastDaily));
+
+       
+                let mins = pad_zero(timeObj.minutes).padStart(2, "0"),
+                secs = pad_zero(timeObj.seconds).padStart(2, "0");
+
+            let finalTime = `**${mins}:${secs}**`;
+            return message.channel.send(`Sorry, you can't spin after ${finalTime}.`);
+        } else {
+
+        }
+
+    } catch (error) {
+        console.log(error);
+        return message.channel.send(`Oopsie, unknown error I guess: ${error}`);
+    }  
+  
   if (cmd === "invite" || cmd === "i") {
     const embed = new Discord.MessageEmbed()
     .setAuthor(client.user.username + "", client.user.displayAvatarURL())
@@ -374,7 +397,7 @@ client.on("message", async message => {
   if (cmd === "ping") {
     let m = await message.channel.send(myembed(`Pinging...`))
     
-    m.edit(embed(`:ping_pong: Pong!! **${client.ws.ping}**ms`))
+    m.edit(myembed(`:ping_pong: Pong!! **${client.ws.ping}**ms`))
   }
   
   if (cmd === "set" || cmd === "channel") {
@@ -652,10 +675,10 @@ client.on("message", async message => {
           data.token = newToken;
           data.save()
           
-          return message.channel.send(myembed(`Succesfully regenerate:\n||${newToken}||\nhttps://urlcord.cf/chatbot?token=${newToken}&msg=hello`))
+          return message.member.send(myembed(`Succesfully regenerate:\n||${newToken}||\nhttps://urlcord.cf/chatbot?token=${newToken}&msg=hello`))
         }
         
-        return message.channel.send(myembed(`**You already have token!**\n||${data.token}||\n__Dont make people know this token, just you.__\nhttps://urlcord.cf/chatbot?token=${data.token}&msg=hello`))
+        return message.member.send(myembed(`**You already have token!**\n||${data.token}||\n__Dont make people know this token, just you.__\nhttps://urlcord.cf/chatbot?token=${data.token}&msg=hello`))
       } else {
         let token = makeid(18);
         let newDb = new tkn({
@@ -664,7 +687,7 @@ client.on("message", async message => {
         });
         newDb.save();
         
-        return message.channel.send(myembed(`**Welcome to URLCORD.CF chat bot !!**\n**You can make your discord bot can chatting**\ntoken: ||${token}||\n__Dont make people know this token, just you.__\nhttps://urlcord.cf/chatbot?token=${token}&msg=hello`))
+        return message.member.send(myembed(`**Welcome to URLCORD.CF chat bot !!**\n**You can make your discord bot can chatting**\ntoken: ||${token}||\n__Dont make people know this token, just you.__\nhttps://urlcord.cf/chatbot?token=${token}&msg=hello`))
       }
       
     });
