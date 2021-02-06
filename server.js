@@ -7,6 +7,7 @@ const passport =  require('passport');
 const session = require("express-session");
 const  Strategy = require("passport-discord").Strategy;
 let bodyParser = require("body-parser");
+const qdb = require("quick.db")
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 // Discord Login
@@ -227,22 +228,22 @@ client.on("message", async message => {
   
   let prefix = "url"
   
-  if (!message.guild.me.hasPermission("SEND_MESSAGES")) return;
-  
   if (message.content.toLowerCase() === `<@${client.user.id}>` || message.content.toLowerCase() === `<@!${client.user.id}>`) {
     message.channel.send(`Hello **${message.author.username}**! You need my prefix? my prefix is **${prefix}**`)
   }  
   
-  if (!message.content.startsWith(prefix)) return;
+  if (!message.content.toLowerCase().startsWith(prefix)) return;
   
   const args = message.content
     .slice(prefix.length)
     .trim()
     .split(/ +/g);
   const cmd = args.shift().toLowerCase();
-  
-    let lastDaily = await db.get(`test.${message.author.id}`);
-    let buck = await db.get(`account.${message.author.id}.balance`);
+
+
+    let ms = require("parse-ms")
+    let pad_zero = num => (num < 10 ? '0' : '') + num;  
+    let lastDaily = await qdb.get(`test.${message.author.id}`);
     let cooldown = 5000;
     try {
         
@@ -254,17 +255,14 @@ client.on("message", async message => {
                 secs = pad_zero(timeObj.seconds).padStart(2, "0");
 
             let finalTime = `**${mins}:${secs}**`;
-            return message.channel.send(`Sorry, you can't spin after ${finalTime}.`);
+            return message.channel.send(myembed(`Sorry, you cannot use command before ${finalTime}.`));
         } else {
 
-        }
 
-    } catch (error) {
-        console.log(error);
-        return message.channel.send(`Oopsie, unknown error I guess: ${error}`);
-    }  
   
   if (cmd === "invite" || cmd === "i") {
+    qdb.set(`test.${message.author.id}`, Date.now())
+     
     const embed = new Discord.MessageEmbed()
     .setAuthor(client.user.username + "", client.user.displayAvatarURL())
     .setColor(color)
@@ -274,6 +272,8 @@ client.on("message", async message => {
   }
   
   if (cmd === "help" || cmd === "h" || cmd === "commands") {
+    qdb.set(`test.${message.author.id}`, Date.now())
+    
     const embed = new Discord.MessageEmbed()
     .setAuthor('Make your own invite url', client.user.displayAvatarURL())
     .setColor(color)
@@ -395,12 +395,16 @@ client.on("message", async message => {
   };
   
   if (cmd === "ping") {
+    qdb.set(`test.${message.author.id}`, Date.now())
+    
     let m = await message.channel.send(myembed(`Pinging...`))
     
     m.edit(myembed(`:ping_pong: Pong!! **${client.ws.ping}**ms`))
   }
   
   if (cmd === "set" || cmd === "channel") {
+    qdb.set(`test.${message.author.id}`, Date.now())
+    
     if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send(myembed("Error: You need Administrator permission"));
     
     let channel = message.mentions.channels.first();
@@ -425,6 +429,8 @@ client.on("message", async message => {
   };
   
   if (cmd === "description" || cmd === "desc") {
+    qdb.set(`test.${message.author.id}`, Date.now())
+    
     if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send(myembed('Error: You need Administrator permission'))
     
     db.findOne({guild_id: message.guild.id}, async (err, data) => {
@@ -445,6 +451,8 @@ client.on("message", async message => {
   }
   
   if (cmd === "edit" || cmd === "code") {
+    qdb.set(`test.${message.author.id}`, Date.now())
+    
     if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send(myembed('Error: You need Administrator permission'))
     
     db.findOne({guild_id: message.guild.id}, async (err, data) => {
@@ -476,6 +484,8 @@ client.on("message", async message => {
   }
   
   if (cmd === "setup" || cmd === "on" || cmd === "enable") {
+    qdb.set(`test.${message.author.id}`, Date.now())
+    
     if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send(myembed("Error: You need Administrator permission"));
     
     const channel = message.mentions.channels.first() || message.channel;
@@ -532,6 +542,8 @@ client.on("message", async message => {
   };
   
   if (cmd === "unsetup" || cmd === "off" || cmd === "disable") {
+    qdb.set(`test.${message.author.id}`, Date.now())
+    
     if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send(myembed("Error: You need Administrator permission"));
     
     db.findOne({guild_id: message.guild.id}, async (err, data) => {
@@ -553,6 +565,7 @@ client.on("message", async message => {
   }
   
   if (cmd === "link" || cmd.toLowerCase() === message.guild.name.toLowerCase()) {
+    qdb.set(`test.${message.author.id}`, Date.now())
     
     db.findOne({guild_id: message.guild.id}, async (err, data) => {
       
@@ -567,6 +580,8 @@ client.on("message", async message => {
   }
   
   if (cmd === "tutorial" || cmd === "howto") {
+    qdb.set(`test.${message.author.id}`, Date.now())
+    
     let lang = false;
     
     const en = new Discord.MessageEmbed()
@@ -626,6 +641,8 @@ client.on("message", async message => {
   }
   
   if (cmd === "info" || cmd === "information" || cmd === "own") {
+    qdb.set(`test.${message.author.id}`, Date.now())
+    
     db.findOne({guild_id: message.guild.id}, async (err, data) => {
 
       if (data) {
@@ -665,6 +682,8 @@ client.on("message", async message => {
   }
   
   if (cmd === "chatbot" || cmd === "cb") {
+    qdb.set(`test.${message.author.id}`, Date.now())
+    
     message.channel.send(`I send something to your dm`).then(x => x.delete({timeout: 5000}))
     
     tkn.findOne({user_id: message.author.id}, async (err, data) => {
@@ -694,6 +713,8 @@ client.on("message", async message => {
   }
   
   if (cmd === "stats") {
+    qdb.set(`test.${message.author.id}`, Date.now())
+    
     let users = 0;
     
     client.guilds.cache.map(x => {
@@ -704,14 +725,14 @@ client.on("message", async message => {
   }
   
   
-function myembed(message) {
-  let funcembed = new Discord.MessageEmbed()
-  .setColor(color)
-  .setDescription(`${message}`)
-  .setFooter(`Optional Message`)
-  
-  return funcembed;
-}  
+
+        }
+
+    } catch (error) {
+        console.log(error);
+        return message.channel.send(`Oopsie, unknown error I guess: ${error}`);
+    }            
+          
 });
 
 // global function
@@ -730,3 +751,11 @@ function makeid(length) {
    return result;
 }
 
+function myembed(message) {
+  let funcembed = new Discord.MessageEmbed()
+  .setColor(color)
+  .setDescription(`${message}`)
+  .setFooter(`Optional Message`)
+  
+  return funcembed;
+}  
