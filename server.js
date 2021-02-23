@@ -48,6 +48,7 @@ app.get('/callback',
 // database mongodb;
 let db = require("./database.js");
 let tkn = require("./token.js");
+let botDB = require("./botdb.js");
 
 // web system
 app.use(express.static("public"));
