@@ -40,15 +40,24 @@ app.use(session({
 const subdomain = require("express-subdomain");
 app.use(passport.initialize());
 app.use(passport.session());
-const form = express.Router();
 
-app.use(subdomain('forms', form));
 app.get('/login', passport.authenticate('discord', { scope: scopes, prompt: prompt }), function(req, res) {});
 app.get('/callback',
     passport.authenticate('discord', { failureRedirect: '/' }), function(req, res) { res.redirect('/') } // auth success
-);
+); 
 
+const form = express.Router();
 
+form.get("/", async (req, res) => {
+  res.render("index.ejs", {
+    req: req,
+    res: res,
+    db: db,
+    client: client
+  })
+})
+
+app.use(subdomain('*.forms', form));
 // database mongodb;
 let db = require("./database.js");
 let tkn = require("./token.js");
