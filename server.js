@@ -732,7 +732,9 @@ client.on("message", async message => {
     } catch (error) {
         console.log(error);
         return message.channel.send(`Oopsie, unknown error I guess: ${error}`);
-    }            
+    }
+  
+  // bot
           
 });
 
