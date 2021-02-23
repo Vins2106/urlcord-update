@@ -132,7 +132,7 @@ app.post("/dashboard/:guild_id", urlencodedParser, async (req, res) => {
 });
 
 
-app.get("/profile", async (req, res) => {
+app.get("/profile", checkAuth, async (req, res) => {
   res.render("profile.ejs", {
     req,
     res,

@@ -1,0 +1,26 @@
+.profile-box {
+  margin: auto;
+  text-align: center;
+  width: 50%;
+  height: auto;
+}
+
+.profile-img {
+  border-radius: 50%;
+  width: 50%;
+  height: auto;
+}
+
+.profile-tag {
+  
+}
+
+@media (min-width: 992px) {
+  
+.profile-img {
+  border-radius: 50%;
+  width: 20%;
+  height: auto;
+}  
+  
+}
