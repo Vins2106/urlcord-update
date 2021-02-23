@@ -22,7 +22,8 @@
     "passport": "^0.4.1",
     "passport-discord": "^0.1.4",
     "node-fetch": "^2.6.1",
-    "parse-ms": "^2.1.0"
+    "parse-ms": "^2.1.0",
+    "express-subdomain": "1.0.5"
   },
   "engines": {
     "node": "12.x"

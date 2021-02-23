@@ -37,8 +37,12 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }));
+const subdomain = require("express-subdomain");
 app.use(passport.initialize());
 app.use(passport.session());
+const form = express.Router();
+
+app.use(subdomain('forms', form));
 app.get('/login', passport.authenticate('discord', { scope: scopes, prompt: prompt }), function(req, res) {});
 app.get('/callback',
     passport.authenticate('discord', { failureRedirect: '/' }), function(req, res) { res.redirect('/') } // auth success
