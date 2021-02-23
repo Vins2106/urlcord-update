@@ -1,25 +1,39 @@
 .profile-box {
   margin: auto;
   text-align: center;
-  width: 50%;
+  width: 100%;
   height: auto;
+  padding: 10px;
+  background-color: #1a1c1f;
+  border-radius: 16px;
 }
 
 .profile-img {
   border-radius: 50%;
-  width: 50%;
+  width: 35%;
   height: auto;
 }
 
 .profile-tag {
-  
+  font-weight: bold;
+  color: white;
+  font-size: 18px;
+  margin-left: 20px;
+}
+
+.profile-tag span {
+  color: grey;
 }
 
 @media (min-width: 992px) {
   
+  .profile-box {
+    width: 50%;
+  }  
+  
 .profile-img {
   border-radius: 50%;
-  width: 20%;
+  width: 25%;
   height: auto;
 }  
   
