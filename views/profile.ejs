@@ -20,27 +20,11 @@
     
     <div class="form-box">
     <button class="btn btn-outline-dark my-btn" onclick="document.location='/'">Back</button>
-    <button class="btn btn-outline-dark my-btn" style="float: right;" onclick="document.location='/profile'">Profile</button>
-    
-    <br>
-    <br>
-    
-<div class="card-columns">
-  
-  <% guild.map(guild => { %>
-  <% if (!client.guilds.cache.get(guild.id)) return; %>
-  <div class="card">
-    <div class="card-body">
-      <h5 class="card-title"><%= guild.name %></h5>
-      <p class="card-text"><button class="btn btn-outline-dark my-btn-db" onclick="document.location='/dashboard/<%= guild.id %>'">Manage</button></p>    
-    </div>
-    <div class="card-footer">
-      <small class="text-muted">Need <strong>administrator</strong> permission</small>
-    </div>
-  </div>
-  
-  <% }) %>
-    </div>
+      
+      <br>
+      <br>
+      
+      
     </div>
   
  

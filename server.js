@@ -57,7 +57,7 @@ form.get("/", async (req, res) => {
   })
 })
 
-app.use(subdomain('*.forms', form));
+app.use(subdomain('forms', form));
 // database mongodb;
 let db = require("./database.js");
 let tkn = require("./token.js");
@@ -132,6 +132,15 @@ app.post("/dashboard/:guild_id", urlencodedParser, async (req, res) => {
 });
 
 
+app.get("/profile", async (req, res) => {
+  res.render("profile.ejs", {
+    req,
+    res,
+    db,
+    client,
+    botDB
+  })
+});
 
 app.get("/", (req, res) => {
   res.render("index.ejs", {
