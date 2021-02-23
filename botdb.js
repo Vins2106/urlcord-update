@@ -8,7 +8,6 @@ module.exports = model(
     url: {
       code: String,
       format: String,
-    },
-    enable: String
+    }
   })
 );
