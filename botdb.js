@@ -3,11 +3,10 @@ module.exports = model(
   "bot",
   new Schema({
     bot_id: String,
-    views: String,
-    description: String,
-    url: {
-      code: String,
-      format: String,
+    bots: {
+      id: String,
+      url: String,
+      views: String
     }
   })
 );
