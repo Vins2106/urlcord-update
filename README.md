@@ -17,4 +17,4 @@ node server.js
 ```
 
 # Glitch.com
-![Link](https://glitch.com)# urlcord
+https://glitch.com
