@@ -6,6 +6,8 @@ module.exports = model(
     bots: {
       id: String,
       url: String,
+      description: String,
+      code: String,
       views: String
     }
   })
