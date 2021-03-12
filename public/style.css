@@ -3,6 +3,10 @@ body {
   margin: 35px !important;
 }
 
+.listing {
+  margin: 5px !important;
+}
+
 .my-img {
   height: 40% !important;
   width: 40% !important;  
