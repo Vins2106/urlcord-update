@@ -181,7 +181,34 @@ app.get("/list/server", async (req, res) => {
     
   } else if (sc) {
     
-    
+    db.find().sort().exec((err, items) => {
+      
+      let list = [];
+      
+      items.map(x => {
+        if (x.guild.name.indexOf(sc) || x.code.indexOf(sc)) {
+          list.push({
+    guild_id: x.guild_id,
+    code: x.code,
+    used: x.used,
+    description: x.description,
+    guild: {data: x.guild.data, name: x.guild.name, id: x.data.id, icon: x.guild.icon, code: x.guild.code, redirect: x.guild.redirect},
+    user: {id: x.user.id, tag: x.user.tag, username: x.user.username}            
+          })
+        } else {
+          
+        }
+      });
+      
+      res.render("list/index.ejs", {
+        req,
+        res,
+        db,
+        client,
+        items: list
+      })
+      
+    });
     
   }
 });
