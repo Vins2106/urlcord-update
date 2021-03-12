@@ -63,9 +63,8 @@
     
 <div class="row row-cols-1 row-cols-md-3">
   
-  <% db.find().sort([["code"]]).exec((err, res) => { %>
-  <% if (err) return console.log(`${err}`) %>
-  <% res.map(data => { %>
+
+  <% items.map(data => { %>
   
   <div class="col mb-4">
     <div class="card h-100">
@@ -75,8 +74,6 @@
       </div>
     </div>
   </div>
-  <% }) %>
-  
   <% }) %>
   
   <div class="col mb-4">

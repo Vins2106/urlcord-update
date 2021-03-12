@@ -162,11 +162,17 @@ app.get("/route", async (req, res) => {
 });
 
 app.get("/list/server", async (req, res) => {
+  let items = [];
+  db.find().sort().exec((err, res) => {
+    items.push(res)
+  });
+  
   res.render("list/index.ejs", {
     req,
     res,
     db,
-    client
+    client,
+    items
   })
 });
 
