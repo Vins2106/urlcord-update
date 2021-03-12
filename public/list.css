@@ -119,3 +119,7 @@
         column-count: 5;
     }
 }
+
+.card-columns {
+  margin-top: 15px !important;
+}

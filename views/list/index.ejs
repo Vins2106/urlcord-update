@@ -61,7 +61,7 @@
     </div>
     
 <div class="card-columns">
-  <% items.map(data => { %>
+  <% items.slice(0, 12).sort((a, b) => b.used - a.used).map(data => { %>
   <% if (!data.guild.name) return; %>
   
   <div class="card" onclick="document.location='/list/server/<%= data.guild.id %>'">
@@ -75,7 +75,7 @@
       <p class="card-text"><%= data.description.length > 100 ? data.description.substring(0, 50) + "..." : data.description; %></p>
     </div>
     <div class="card-footer">
-      <small class="text-muted">https://urlcord.cf/<%= data.code %></small>
+      <small class="text-muted">👁 <%= data.used %></small>
     </div>
   </div>
   
