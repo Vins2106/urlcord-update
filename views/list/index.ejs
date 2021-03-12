@@ -72,7 +72,7 @@
     <% } %>
     <div class="card-body">
       <h5 class="card-title"><%= data.guild.name %></h5>
-      <p class="card-text"><%= data.description.length > 100 ? data.description.substring(0, 12) + "..." : data.description; %></p>
+      <p class="card-text"><%= data.description.length > 100 ? data.description.substring(0, 50) + "..." : data.description; %></p>
     </div>
     <div class="card-footer">
       <small class="text-muted">https://urlcord.cf/<%= data.code %></small>
