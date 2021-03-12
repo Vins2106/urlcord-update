@@ -20,15 +20,10 @@
    <p align="center">
      <img class="my-img" src="https://cdn.discordapp.com/avatars/<%= client.user.id %>/<%= client.user.avatar %>.png?size=4096"> 
      
-    <h1 class="h1-text" style="text-align: center;">Make your own <strong>custom invite link</strong> with <strong>URLCORD.CF</strong> discord bot</h1>
+    <h1 class="h1-text" style="text-align: center;">Choose where do you want to go</h1>
     <p align="center">
-      <button type="button" class="btn btn-outline-dark my-btn" onclick="document.location='/invite'">Add Your Server</button>
-      <button type="button" class="btn btn-outline-dark my-btn" onclick="document.location='/route'">Routes</button>
-     <% if (req.user) { %>
-      <button type="button" class="btn btn-outline-dark my-btn" onclick="document.location='/dashboard'">Dashboard</button>
-      <% } else { %>
-      <button type="button" class="btn btn-outline-dark my-btn" onclick="document.location='/login'">Login</button>
-      <% } %>
+      <button type="button" class="btn btn-outline-dark my-btn" onclick="document.location='/'">Home</button>
+      <button type="button" class="btn btn-outline-dark my-btn" onclick="document.location='/list/server'">Server List</button>
     </p>     
   </body>
 </html>

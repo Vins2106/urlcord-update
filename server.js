@@ -152,7 +152,16 @@ app.get("/", (req, res) => {
 });
 
 // Listing
-app.get("/list", async (req, res) => {
+app.get("/route", async (req, res) => {
+  res.render("route.ejs", {
+    req,
+    res,
+    db,
+    client
+  })
+});
+
+app.get("/list/server", async (req, res) => {
   res.render("list/index.ejs", {
     req,
     res,
