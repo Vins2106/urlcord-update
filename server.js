@@ -162,19 +162,18 @@ app.get("/route", async (req, res) => {
 });
 
 app.get("/list/server", async (req, res) => {
-  let items = [];
-  db.find().sort().exec((err, res) => {
-    res.forEach(x => {
-      items.push(x)
-    })
-  });
-  
+
+
+  db.find().sort().exec((err, items) => {
+    
   res.render("list/index.ejs", {
     req,
     res,
     db,
     client,
     items
+  })
+    
   })
 });
 
@@ -533,6 +532,19 @@ client.on("message", async message => {
     
   }
   
+  if (cmd === "refresh") {
+    qdb.set(`test.${message.author.id}`, Date.now());
+    
+    if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send(myembed("Error: You need Administrator permission"))
+    
+    db.findOne({
+      guild_id: message.guild.id
+    }, async (error, data) => {
+      
+    })
+    
+  }
+          
   if (cmd === "setup" || cmd === "on" || cmd === "enable") {
     qdb.set(`test.${message.author.id}`, Date.now())
     

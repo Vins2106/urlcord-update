@@ -65,8 +65,10 @@
   
 
   <% items.map(data => { %>
+  <% if (!data.guild.name) return; %>
   
   <div class="col mb-4">
+    <img src="https://cdn.discordapp.com/icons/<%= data.guild.id %>/<%= data.guild.data.icon %>.webp" class="card-img-top" alt="...">
     <div class="card h-100">
       <div class="card-body">
         <h5 class="card-title"><%= data.guild.name %></h5>
