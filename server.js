@@ -164,9 +164,12 @@ app.get("/route", async (req, res) => {
 app.get("/list/server", async (req, res) => {
 
 
+  let sc = req.query.search;
+  if (!sc) {
+  
   db.find().sort().exec((err, items) => {
     
-  res.render("list/index.ejs", {
+  return res.render("list/index.ejs", {
     req,
     res,
     db,
@@ -175,12 +178,28 @@ app.get("/list/server", async (req, res) => {
   })
     
   })
+    
+  } else if (sc) {
+    
+    
+    
+  }
 });
 
 app.get("/list/server/:id", async (req, res) => {
   
   db.findOne({guild_id: req.params.id}, async (err, data) => {
+    if (err) return res.redirect("/list/server");
     
+    if (!data) return res.redirect("/list/server");
+    
+    res.render("list/server.ejs", {
+      req,
+      res,
+      db,
+      client,
+      data
+    })
   })
   
 });
