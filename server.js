@@ -541,7 +541,14 @@ client.on("message", async message => {
       guild_id: message.guild.id
     }, async (error, data) => {
       
-    })
+      if (!data) return message.channel.send(myembed("Error: Please setup first!"))
+      
+      data.guild = {data: message.guild, name: message.guild.name, id: message.guild.id, icon: message.guild.iconURL(), code: data.code, redirect: `https://discord.gg/${data.code}`}
+      data.save();
+      
+      message.channel.send(`Guild data has been updated!`)
+      
+    });
     
   }
           
@@ -570,7 +577,7 @@ client.on("message", async message => {
           code: codeS,
           used: 0,
           description: "A nice server, join now!",
-          guild: {data: message.guild, name: message.guild.name, id: message.guild.id, code: code, redirect: `https://discord.gg/${link.code}`},
+          guild: {data: message.guild, name: message.guild.name, id: message.guild.id, icon: message.guild.iconURL(), code: code, redirect: `https://discord.gg/${link.code}`},
           user: {id: message.author.id, tag: message.author.tag, username: message.author.username}
         });
         
