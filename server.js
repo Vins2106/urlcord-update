@@ -186,7 +186,8 @@ app.get("/list/server", async (req, res) => {
       let list = [];
       
       items.map(x => {
-        if (x.guild.name.indexOf(sc) || x.code.indexOf(sc)) {
+        try {
+        if (x.guild.name.indexOf(sc) > -1 || x.code.indexOf(sc) > -1) {
           list.push({
     guild_id: x.guild_id,
     code: x.code,
@@ -196,6 +197,9 @@ app.get("/list/server", async (req, res) => {
     user: {id: x.user.id, tag: x.user.tag, username: x.user.username}            
           })
         } else {
+          
+        }          
+        } catch (e) {
           
         }
       });
@@ -211,6 +215,10 @@ app.get("/list/server", async (req, res) => {
     });
     
   }
+});
+
+app.post("/list/server", urlencodedParser, async (req, res) => {
+  res.redirect(`/list/server?search=${req.body.search}`)
 });
 
 app.get("/list/server/:id", async (req, res) => {
