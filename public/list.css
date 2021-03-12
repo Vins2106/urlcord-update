@@ -84,9 +84,14 @@
 
 .card {
   width: 200px !important;
-  height: auto !important;
+  height: 334px !important;
+  cursor: pointer;
 }
 
 .card-footer {
   height: auto !important;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;  
 }

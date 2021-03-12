@@ -64,7 +64,7 @@
   <% items.map(data => { %>
   <% if (!data.guild.name) return; %>
   
-  <div class="card">
+  <div class="card" onclick="document.location='/list/server/<%= data.guild.id %>'">
     <% if (!data.guild.icon) { %>
     <img src="https://www.online-tech-tips.com/wp-content/uploads/2019/09/discord.jpg.optimal.jpg" class="card-img-top guild-icon" alt="guild icon">
     <% } else { %>
