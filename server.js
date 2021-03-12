@@ -768,8 +768,12 @@ client.on("message", async message => {
   
           
           if (cmd === "random") {
+            qdb.set(`test.${message.author.id}`, Date.now())
+            
             let _servers = await db.find().exec((err, res) => {
+              let randomS = res[Math.floor(Math.random() * res.length)];
               
+              message.channel.send(`https://urlcord.cf/${randomS.code}`)
             })
           }
   
