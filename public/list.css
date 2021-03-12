@@ -2,6 +2,11 @@
    ====== Search Box ====== 
    =========================== */
 
+.sc-box {
+  border-bottom: 1px solid grey;
+  padding-bottom: 20px;
+}
+
 .search
 {
 	border: 2px solid black;
@@ -49,12 +54,12 @@
    ====== Medua Query for Search Box ====== 
    =========================== */
 
-@media only screen and (min-width : 150px) and (max-width : 780px)
+@media (min-width: 992px) 
 {
 	{}
 	.search
 	{
-		width: 95%;
+		width: 40%;
 		margin: 0 auto;
 	}
 

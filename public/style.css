@@ -49,6 +49,10 @@ body {
     margin-left: auto;
 }
 
+.navbar-light .navbar-toggler {
+  border: none !important;
+}
+
 @media (min-width: 992px) { 
 
   .my-img {
