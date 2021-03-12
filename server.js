@@ -151,6 +151,16 @@ app.get("/", (req, res) => {
   })
 });
 
+// Listing
+app.get("/list", async (req, res) => {
+  res.render("list/index.ejs", {
+    req,
+    res,
+    db,
+    client
+  })
+});
+
 app.get("/invite", async (req, res) => {
   res.redirect("https://discord.com/oauth2/authorize?client_id=802918584497733632&permissions=8&scope=bot")
 });
