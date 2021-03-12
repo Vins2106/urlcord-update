@@ -73,3 +73,20 @@
   width: auto;
   height: auto;
 }
+
+.card-columns {
+  margin: 0 !important;
+  text-align: center !important;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center !important;
+}
+
+.card {
+  width: 200px !important;
+  height: auto !important;
+}
+
+.card-footer {
+  height: auto !important;
+}

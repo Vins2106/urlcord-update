@@ -60,7 +60,7 @@
 			</div>      
     </div>
     
-<div class="card-deck">
+<div class="card-columns">
   <% items.map(data => { %>
   <% if (!data.guild.name) return; %>
   
@@ -71,19 +71,14 @@
     <img src="<%= data.guild.icon %>" class="card-img-top" alt="...">
     <% } %>
     <div class="card-body">
-      <h5 class="card-title">Card title</h5>
-      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+      <h5 class="card-title"><%= data.guild.name %></h5>
+      <p class="card-text"><%= data.description.length > 100 ? data.description.substring(0, 12) + "..." : data.description; %></p>
     </div>
     <div class="card-footer">
-      <small class="text-muted">Last updated 3 mins ago</small>
+      <small class="text-muted">https://urlcord.cf/<%= data.code %></small>
     </div>
   </div>
-</div> 
-    <div class="card-body">
-      <h5 class="card-title">Card title that wraps to a new line</h5>
-      <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-    </div>
-  </div>
+  
   <% }) %>
 </div>    
    
