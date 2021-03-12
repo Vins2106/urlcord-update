@@ -61,22 +61,25 @@
     </div>
     
     
-<div class="card-deck">
+<div class="row row-cols-1 row-cols-md-3">
   
   <% db.find().sort().exec((data, res) => { %>
   
-  <% for (let i = 0; i < res.length; i++) { %>
+  <% res.forEach(data => { %>
   
-  <div class="card">
-    <div class="card-body">
-      <h5 class="card-title"><%= res[i].guild.name %></h5>
-      <p class="card-text"><%= res[i].description %></p>
+  <div class="col mb-4">
+    <div class="card h-100">
+      <div class="card-body">
+        <h5 class="card-title"><%= data.guild.name %></h5>
+        <p class="card-text"><%= data.description %></p>
+      </div>
     </div>
-  </div>  
-  
-  <% } %>
+  </div>
+  <% }) %>
   
   <% }) %>
+</div>    
+    
 </div>    
     
   </body>
