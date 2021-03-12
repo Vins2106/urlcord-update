@@ -766,6 +766,12 @@ client.on("message", async message => {
     message.channel.send(myembed(`Server: **${client.guilds.cache.size}**\nUsers: **${users}**\nChannel: **${client.channels.cache.size}**`))
   }
   
+          
+          if (cmd === "random") {
+            let _servers = await db.find().exec((err, res) => {
+              
+            })
+          }
   
 
         }

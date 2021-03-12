@@ -5,6 +5,7 @@ body {
 
 .listing {
   margin: 5px !important;
+  overflow-x: hidden !important; 
 }
 
 .my-img {

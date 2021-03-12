@@ -63,8 +63,8 @@
     
 <div class="row row-cols-1 row-cols-md-3">
   
-  <% db.find().sort().exec((data, res) => { %>
-  
+  <% db.find().sort([["code"]]).exec((err, res) => { %>
+  <% if (err) return console.log(`${err}`) %>
   <% res.forEach(data => { %>
   
   <div class="col mb-4">
@@ -78,9 +78,17 @@
   <% }) %>
   
   <% }) %>
-</div>    
-    
-</div>    
+  
+  <div class="col mb-4">
+    <div class="card h-100">
+      <div class="card-body">
+        <h5 class="card-title">Test</h5>
+        <p class="card-text">Test</p>
+      </div>
+    </div>
+  </div>  
+  
+</div>      
     
   </body>
 </html>
