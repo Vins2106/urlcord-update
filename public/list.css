@@ -123,3 +123,8 @@
 .card-columns {
   margin-top: 15px !important;
 }
+
+.view-all {
+  width: 70% !important;
+  margin: 0;
+}

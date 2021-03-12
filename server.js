@@ -177,6 +177,14 @@ app.get("/list/server", async (req, res) => {
   })
 });
 
+app.get("/list/server/:id", async (req, res) => {
+  
+  db.findOne({guild_id: req.params.id}, async (err, data) => {
+    
+  })
+  
+});
+
 app.get("/invite", async (req, res) => {
   res.redirect("https://discord.com/oauth2/authorize?client_id=802918584497733632&permissions=8&scope=bot")
 });
