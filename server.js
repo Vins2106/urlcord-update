@@ -183,36 +183,29 @@ app.get("/list/server", async (req, res) => {
     
     db.find().sort().exec((err, items) => {
       
-      let list = [];
+    let list = [];
       
-      items.map(x => {
-        try {
-        if (x.guild.name.indexOf(sc) > -1 || x.code.indexOf(sc) > -1) {
-          list.push({
-    guild_id: x.guild_id,
-    code: x.code,
-    used: x.used,
-    description: x.description,
-    guild: {data: x.guild.data, name: x.guild.name, id: x.data.id, icon: x.guild.icon, code: x.guild.code, redirect: x.guild.redirect},
-    user: {id: x.user.id, tag: x.user.tag, username: x.user.username}            
-          })
-        } else {
-          
-        }          
-        } catch (e) {
-          
-        }
+  for (let i = 0; i < items.length; i++) {
+
+    
+  let text = items[i];
+    if (text.guild.name.indexOf(sc) > -1) {
+      list.push(items[i]);
+    } else {
+
+    }
+  }
+
+   res.render("index.ejs", {
+     req,
+     res,
+     db,
+     client,
+     items: list
+   })
+      
       });
-      
-      res.render("list/index.ejs", {
-        req,
-        res,
-        db,
-        client,
-        items: list
-      })
-      
-    });
+   
     
   }
 });
