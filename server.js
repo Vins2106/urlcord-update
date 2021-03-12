@@ -164,7 +164,9 @@ app.get("/route", async (req, res) => {
 app.get("/list/server", async (req, res) => {
   let items = [];
   db.find().sort().exec((err, res) => {
-    items.push(res)
+    res.forEach(x => {
+      items.push(x)
+    })
   });
   
   res.render("list/index.ejs", {
@@ -781,6 +783,36 @@ client.on("message", async message => {
               
               message.channel.send(`https://urlcord.cf/${randomS.code}`)
             })
+          }
+          
+          if (cmd === "eval") {
+    if(message.author.id !== "727110220400033865") return;
+
+  const code = args.join(" ")
+  if (!code) {
+    return message.channel.send("Please provide some code to run eval!")
+  }
+  
+  try {
+    const start = process.hrtime();
+    let output = eval(code);
+    const difference = process.hrtime(start);
+    
+    return message.channel.send(`
+*Executed in ${difference[0] > 0 ? `${difference[0]}s ` : ""}${difference[1] /  1e6}ms*
+\`\`\`js
+${output}
+\`\`\`
+`)
+    
+    
+  } catch(e) {
+   message.channel.send(`
+**Error**:
+\`\`\`js
+${e}
+\`\`\``) 
+  }            
           }
   
 
