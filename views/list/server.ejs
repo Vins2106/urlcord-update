@@ -53,16 +53,17 @@
 </nav> 
     
     <div class="server-box">
+      <div class="server-top">
       <img class="server-icon" alt="server icon" src="<%= data.guild.icon %>">
       <br>
-      <span class="server-name"><%= data.guild.name %></span>
+      <span class="server-name"><%= data.guild.name %></span><span class="badge badge-warning" style="margin-left: 10px;">👁️ <%= data.used %></span>     
+      </div>
       <div class="b"></div>
       <p class="server-desc">
         <%= data.description %>
       </p>
       <div class="server-nav">
-        <button class="btn btn-primary" onclick="document.href='https://urlcord.cf/<%=  data.code %>'">Join</button>
-        <button class="btn btn-primary" onclick="document.href='/list/server/<%= data.guild.id %>/stats'">Stats</button>
+        <button class="btn btn-primary" onclick="location.href='https://urlcord.cf/<%=  data.code %>'">Join</button>
       </div>
     </div>
 

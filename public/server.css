@@ -13,18 +13,27 @@
 }
 
 .server-name {
-  font-weight: 600;
+  font-weight: bold;
   font-size: 28px;
 }
 
 .server-desc {
   padding-top: 10px;
+  font-weight: 500;
 }
 
 .b {
   padding-top: 10px;
   padding-bottom: 10px;
   border-bottom: 1px solid grey;
+}
+
+.server-stats {
+  padding-top: 10px;
+}
+
+.server-nav {
+  padding-top: 10px;
 }
 
 @media (min-width: 992px) {
