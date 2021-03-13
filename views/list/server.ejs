@@ -28,7 +28,7 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="/list">Home</a>
+        <a class="nav-link" href="/list/server">Home</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/invite">Add Your Server</a>
@@ -56,14 +56,14 @@
       <div class="server-top">
       <img class="server-icon" alt="server icon" src="<%= data.guild.icon %>">
       <br>
-      <span class="server-name"><%= data.guild.name %></span><span class="badge badge-warning" style="margin-left: 10px;">👁️ <%= data.used %></span>     
+      <h2 class="server-name"><%= data.guild.name %><span class="badge badge-info" style="margin-left: 10px; margin-top: 10px;">New</span></h2>
       </div>
       <div class="b"></div>
       <p class="server-desc">
         <%= data.description %>
       </p>
       <div class="server-nav">
-        <button class="btn btn-primary" onclick="location.href='https://urlcord.cf/<%=  data.code %>'">Join</button>
+        <button class="btn btn-primary" onclick="location.href='https://urlcord.cf/<%=  data.code %>'" style="width: 60%; font-weight: bold;">Join</button>
       </div>
     </div>
 
