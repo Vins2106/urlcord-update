@@ -183,20 +183,22 @@ app.get("/list/server", async (req, res) => {
     
     db.find().sort().exec((err, items) => {
       
-    let list = [];
+      let list = [];
       
-  for (let i = 0; i < items.length; i++) {
+      for (let i = 0; i < items.length; i++) {
+        let guild = items[i];
+        if (guild.guild.name) {
+          if (guild.guild.name.indexOf(sc)) {
+            list.push(guild)
+          } else {
+            
+          }
+        } else {
+          
+        }
+      }
 
-    
-  let text = items[i];
-    if (text.guild.name.indexOf(sc) > -1) {
-      list.push(items[i]);
-    } else {
-
-    }
-  }
-
-   res.render("index.ejs", {
+   res.render("list/index.ejs", {
      req,
      res,
      db,
