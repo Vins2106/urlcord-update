@@ -68,6 +68,7 @@
 <div class="card-columns">
   <% items.map(data => { %>
   <% if (!data.guild.name) return; %>
+  <% let OM = guild.members.cache.filter(x => x.presence.status === "online").size + guild.members.cache.filter(x => x.presence.status === "dnd").size + guild.members.cache.filter(x => x.presence.status === "idle").size %>  
   
   <div class="card" onclick="document.location='/list/server/<%= data.guild.id %>'">
     <% if (!data.guild.icon) { %>
@@ -76,11 +77,13 @@
     <img src="<%= data.guild.icon %>" class="card-img-top" alt="guild icon">
     <% } %>
     <div class="card-body">
-      <h5 class="card-title"><%= guild.name %> <span class="badge badge-warning">👁️ <%= data.used %></span></h5>
-      <p class="card-text"><%= data.description.length > 100 ? data.description.substring(0, 50) + "..." : data.description; %></p>
+      <h5 class="card-title"><%= guild.name %></h5>
+      <p class="card-text"><%= data.description ? data.description.substring(0, 50) + "..." : data.description; %></p>
     </div>
     <div class="card-footer">
-      <small class="text-muted">👁 <%= data.used %></small>
+      <span class="badge badge-success"><waw style="border-right: 1px solid grey; padding-right: 5px;">Online</waw> <%= OM %></span>
+      <span class="badge badge-info"><waw style="border-right: 1px solid grey; padding-right: 5px;">Members</waw> <%= guild.memberCount %></span>
+      <span class="badge badge-warning"><waw style="border-right: 1px solid grey; padding-right: 5px;">Click</waw> <%= data.used %></span>
     </div>
   </div>
   
@@ -94,6 +97,7 @@
   <% items.slice(0, 12).sort((a, b) => b.used - a.used).map(data => { %>
   <% let guild = client.guilds.cache.get(data.guild.id); %>
   <% if (!guild || !data.guild.name) return; %>
+  <% let OM = guild.members.cache.filter(x => x.presence.status === "online").size + guild.members.cache.filter(x => x.presence.status === "dnd").size + guild.members.cache.filter(x => x.presence.status === "idle").size %>    
   
   <div class="card" onclick="document.location='/list/server/<%= guild.id %>'">
     <% if (!guild.iconURL()) { %>
@@ -102,10 +106,16 @@
     <img src="<%= guild.iconURL() %>" class="card-img-top" alt="guild icon">
     <% } %>
     <div class="card-body">
-      <h5 class="card-title"><%= guild.name %> <span class="badge badge-warning">👁️ <%= data.used %></span></h5>
-      <p class="card-text"><%= data.description.length > 100 ? data.description.substring(0, 50) + "..." : data.description; %></p>
+      <h5 class="card-title"><%= guild.name %></h5>
+      <p class="card-text"><%= data.description ? data.description.substring(0, 50) + "..." : data.description; %></p>
     </div>
+    <div class="card-footer">
+      <span class="badge badge-success"><waw style="border-right: 1px solid grey; padding-right: 5px;">Online</waw> <%= OM %></span>
+      <span class="badge badge-info"><waw style="border-right: 1px solid grey; padding-right: 5px;">Members</waw> <%= guild.memberCount %></span>
+      <span class="badge badge-warning"><waw style="border-right: 1px solid grey; padding-right: 5px;">Click</waw> <%= data.used %></span>
+    </div>  
   </div>
+  
   
   <% }) %>
 </div>    
