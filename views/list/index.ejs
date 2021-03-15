@@ -27,8 +27,11 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="/list/server">Home</a>
+        <a class="nav-link" href="/">Home</a>
       </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/list/server">Servers</a>
+      </li>  
       <li class="nav-item">
         <a class="nav-link" href="/invite">Add Your Server</a>
       </li>      
@@ -103,7 +106,8 @@
       <p class="card-text"><%= data.description.length > 100 ? data.description.substring(0, 50) + "..." : data.description; %></p>
     </div>
     <div class="card-footer">
-      <small class="text-muted">👁 <%= data.used %></small>
+      <span></span>
+      <span></span>
     </div>
   </div>
   
