@@ -218,6 +218,63 @@ app.get("/list/server", async (req, res) => {
   }
 });
 
+app.get("/list/server/all", async (req, res) => {
+
+
+  let sc = req.query.search;
+  if (!sc) {
+  
+  db.find().sort().exec((err, items) => {
+    
+  return res.render("list/all.ejs", {
+    req,
+    res,
+    db,
+    client,
+    items,
+    sc: false
+  })
+    
+  })
+    
+  } else if (sc) {
+    
+    db.find().sort().exec(async (err, items) => {
+      
+      let list = [];
+      let nonlist = [];
+      
+      for (let i = 0; i < items.length; i++) {
+        let item = items[i];
+        if (item.guild.name) {
+          let guildGet1 = await client.guilds.fetch(item.guild.id);
+          let guildGet = client.guilds.cache.get(guildGet1.id)
+          
+          if (guildGet.name.toLowerCase().indexOf(sc.toLowerCase()) > -1) {
+            list.push(item)
+          } else {
+            nonlist.push(item)
+          }
+        } else {
+          nonlist.push(item)
+        }
+      }
+      
+   res.render("list/all.ejs", {
+     req,
+     res,
+     db,
+     client,
+     items: list,
+     sc: true
+   })
+      
+      });
+   
+    
+  }
+});
+
 app.post("/list/server", urlencodedParser, async (req, res) => {
   res.redirect(`/list/server?search=${req.body.search}`)
 });
