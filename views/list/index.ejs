@@ -73,7 +73,7 @@
     <% if (!data.guild.icon) { %>
     <img src="https://www.online-tech-tips.com/wp-content/uploads/2019/09/discord.jpg.optimal.jpg" class="card-img-top guild-icon" alt="guild icon">
     <% } else { %>
-    <img src="<%= data.guild.icon %>" class="card-img-top" alt="...">
+    <img src="<%= data.guild.icon %>" class="card-img-top" alt="guild icon">
     <% } %>
     <div class="card-body">
       <h5 class="card-title"><%= data.guild.name %></h5>
@@ -99,7 +99,7 @@
     <% if (!guild.iconURL()) { %>
     <img src="https://www.online-tech-tips.com/wp-content/uploads/2019/09/discord.jpg.optimal.jpg" class="card-img-top guild-icon" alt="guild icon">
     <% } else { %>
-    <img src="<%= guild.iconURL() %>" class="card-img-top" alt="...">
+    <img src="<%= guild.iconURL() %>" class="card-img-top" alt="guild icon">
     <% } %>
     <div class="card-body">
       <h5 class="card-title"><%= guild.name %> <span class="badge badge-warning">👁️ <%= data.used %></span></h5>

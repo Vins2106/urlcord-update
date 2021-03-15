@@ -69,47 +69,11 @@
   <% let guild = client.guilds.cache.get(data.guild.id); %>
   <% if (!guild || !data.guild.name) return; %>
   
-    <div class="card" style="width: 22rem; margin:0 auto;"> 
-        <img class="card-img-top"
-            src= 
-"https://media.geeksforgeeks.org/wp-content/uploads/20190506125816/avt.png"
-                    alt="Card image cap"> 
-          
-        <div class="card-body"> 
-            <h5 class="card-title" style="color:green"> 
-                Card title 
-            </h5> 
-              
-            <p class="card-text" style="color:green;"> 
-                This is just a simple card 
-                text inside card body 
-            </p> 
-        </div> 
-          
-        <div class="card-footer text-center"> 
-              
-            <button class="btn btn-primary btn-sm float-left"
-                        id="left" style="color:white"> 
-                Left Button 
-            </button> 
-              
-            <button class="btn btn-warning btn-sm"
-                    id="center" style="color:white"> 
-                Center Button 
-            </button> 
-              
-            <button class="btn btn-danger btn-sm float-right"
-                    id="right" style="color:white"> 
-                Right Button 
-            </button> 
-        </div> 
-    </div>   
-  
   <div class="card" onclick="document.location='/list/server/<%= guild.id %>'">
     <% if (!guild.iconURL()) { %>
     <img src="https://www.online-tech-tips.com/wp-content/uploads/2019/09/discord.jpg.optimal.jpg" class="card-img-top guild-icon" alt="guild icon">
     <% } else { %>
-    <img src="<%= guild.iconURL() %>" class="card-img-top" alt="...">
+    <img src="<%= guild.iconURL() %>" class="card-img-top" alt="guild icon">
     <% } %>
     <div class="card-body">
       <h5 class="card-title"><%= guild.name %></h5>

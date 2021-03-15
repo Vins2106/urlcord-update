@@ -55,11 +55,15 @@
   </div>
 </nav> 
     
+    <% let guild = client.guilds.cache.get(data.guild.id);
+    if (!guild) return res.redirect("/list/server")
+    %>
+    
     <div class="server-box">
       <div class="server-top">
-      <img class="server-icon" alt="server icon" src="<%= data.guild.icon %>">
+      <img class="server-icon" alt="server icon" src="<%= guild.iconURL() %>">
       <br>
-      <h2 class="server-name"><%= data.guild.name %><span class="badge badge-info" style="margin-left: 10px; margin-top: 10px;">👁️ <%= data.used %></span></h2>
+      <h2 class="server-name"><%= guild.name %><span class="badge badge-warning" style="margin-left: 10px; margin-top: 10px;">👁️ <%= data.used %></span></h2>
       </div>
       <div class="b"></div>
       <p class="server-desc">
@@ -69,6 +73,8 @@
         <button class="btn btn-primary" onclick="location.href='https://urlcord.cf/<%=  data.code %>'" style="width: 60%; font-weight: bold;">Join</button>
       </div>
     </div>
+    
+    
 
     
   </body>
