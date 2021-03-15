@@ -174,7 +174,8 @@ app.get("/list/server", async (req, res) => {
     res,
     db,
     client,
-    items
+    items,
+    sc: false
   })
     
   })
@@ -187,26 +188,25 @@ app.get("/list/server", async (req, res) => {
       let nonlist = [];
       
       for (let i = 0; i < items.length; i++) {
-        let guild = items[i];
-        if (guild.guild.name) {
-          if (guild.guild.name.indexOf(sc)) {
-            list.push(guild)
+        let item = items[i];
+        if (item.guild.name) {
+          if (item.code.indexOf(sc) > -1) {
+            list.push(item)
           } else {
-            nonlist.push(guild)
+            nonlist.push(item)
           }
         } else {
-          nonlist.push(guild)
+          nonlist.push(item)
         }
       }
-
-       // halo halo
       
    res.render("list/index.ejs", {
      req,
      res,
      db,
      client,
-     items: list
+     items: list,
+     sc: true
    })
       
       });

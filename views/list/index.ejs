@@ -54,14 +54,16 @@
     <div class="sc-box">
       <div class="search">
 				<form class="search-form">
-					<input class="sc-input" type="text" placeholder="Search server" name="search" required>
+					<input class="sc-input" type="text" placeholder="Search existing code" name="search" required>
 					<input type="submit" value="Submit">
 				</form>
 			</div>      
     </div>
     
+    
+    <% if (sc) { %>
 <div class="card-columns">
-  <% items.slice(0, 12).sort((a, b) => b.used - a.used).map(data => { %>
+  <% items.map(data => { %>
   <% if (!data.guild.name) return; %>
   
   <div class="card" onclick="document.location='/list/server/<%= data.guild.id %>'">
@@ -83,7 +85,34 @@
 </div>    
     <p align="center"> 
       <button class="btn btn-primary view-all" onclick="document.location='/list/server/all'">View All</button>
-    </p>
+    </p>    
+    <% } else if (!sc) { %>
+<div class="card-columns">
+  <% items.slice(0, 12).sort((a, b) => b.used - a.used).map(data => { %>
+  <% let guild = client.guilds.cache.get(data.guild.id); %>
+  <% if (!guild) return; %>
+  
+  <div class="card" onclick="document.location='/list/server/<%= guild.id %>'">
+    <% if (!guild.iconURL()) { %>
+    <img src="https://www.online-tech-tips.com/wp-content/uploads/2019/09/discord.jpg.optimal.jpg" class="card-img-top guild-icon" alt="guild icon">
+    <% } else { %>
+    <img src="<%= guild.iconURL() %>" class="card-img-top" alt="...">
+    <% } %>
+    <div class="card-body">
+      <h5 class="card-title"><%= guild.name %></h5>
+      <p class="card-text"><%= data.description.length > 100 ? data.description.substring(0, 50) + "..." : data.description; %></p>
+    </div>
+    <div class="card-footer">
+      <small class="text-muted">👁 <%= data.used %></small>
+    </div>
+  </div>
+  
+  <% }) %>
+</div>    
+    <p align="center"> 
+      <button class="btn btn-primary view-all" onclick="document.location='/list/server/all'">View All</button>
+    </p>    
+    <% } %>
    
     <script>
     alert(`You already setup your server but not in this list ? try to type url refresh !`)
