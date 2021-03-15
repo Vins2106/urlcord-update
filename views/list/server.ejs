@@ -56,18 +56,23 @@
 </nav> 
     
     <% let guild = client.guilds.cache.get(data.guild.id);
-    if (!guild) return res.redirect("/list/server")
+    if (!guild) return res.redirect("/list/server")    
     %>
+  <% let OM = guild.members.cache.filter(x => x.presence.status === "online").size + guild.members.cache.filter(x => x.presence.status === "dnd").size + guild.members.cache.filter(x => x.presence.status === "idle").size %>      
     
     <div class="server-box">
       <div class="server-top">
       <img class="server-icon" alt="server icon" src="<%= guild.iconURL() %>">
       <br>
-      <h2 class="server-name"><%= guild.name %><span class="badge badge-warning" style="margin-left: 10px; margin-top: 10px;">👁️ <%= data.used %></span></h2>
+      <h2 class="server-name"><%= guild.name %></h2>
+      <br>
+      <span class="badge badge-success"><waw style="border-right: 1px solid grey; padding-right: 5px;">Online</waw> <%= OM %></span>
+      <span class="badge badge-info"><waw style="border-right: 1px solid grey; padding-right: 5px;">Members</waw> <%= guild.memberCount %></span>
+      <span class="badge badge-warning"><waw style="border-right: 1px solid grey; padding-right: 5px;">Click</waw> <%= data.used %></span>        
       </div>
       <div class="b"></div>
       <p class="server-desc">
-        <%= data.description %>
+        <%= data.description.length > 500 ? data.description.substring(0, 500) + `...` : data.description %>
       </p>
       <div class="server-nav">
         <button class="btn btn-primary" onclick="location.href='https://urlcord.cf/<%=  data.code %>'" style="width: 60%; font-weight: bold;">Join</button>

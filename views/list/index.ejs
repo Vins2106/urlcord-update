@@ -77,7 +77,7 @@
     <img src="<%= data.guild.icon %>" class="card-img-top" alt="guild icon">
     <% } %>
     <div class="card-body">
-      <h5 class="card-title"><%= guild.name %></h5>
+      <h5 class="card-title"><%= guild.name ? guild.name.substring(0, 15) + "..." : guild.name; %></h5>
       <p class="card-text"><%= data.description ? data.description.substring(0, 50) + "..." : data.description; %></p>
     </div>
     <div class="card-footer">
@@ -106,8 +106,8 @@
     <img src="<%= guild.iconURL() %>" class="card-img-top" alt="guild icon">
     <% } %>
     <div class="card-body">
-      <h5 class="card-title"><%= guild.name %></h5>
-      <p class="card-text"><%= data.description ? data.description.substring(0, 50) + "..." : data.description; %></p>
+      <h5 class="card-title"><%= guild.name.length > 15 ? guild.name.substring(0, 15) + "..." : guild.name; %></h5>
+      <p class="card-text"><%= data.description.length > 50 ? data.description.substring(0, 50) + "..." : data.description; %></p>
     </div>
     <div class="card-footer">
       <span class="badge badge-success"><waw style="border-right: 1px solid grey; padding-right: 5px;">Online</waw> <%= OM %></span>
