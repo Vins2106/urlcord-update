@@ -102,12 +102,8 @@
     <img src="<%= guild.iconURL() %>" class="card-img-top" alt="...">
     <% } %>
     <div class="card-body">
-      <h5 class="card-title"><%= guild.name %></h5>
+      <h5 class="card-title"><%= guild.name %> <span class="badge badge-warning">👁️ <%= data.used %></span></h5>
       <p class="card-text"><%= data.description.length > 100 ? data.description.substring(0, 50) + "..." : data.description; %></p>
-    </div>
-    <div class="card-footer">
-      <span></span>
-      <span></span>
     </div>
   </div>
   
