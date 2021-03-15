@@ -182,7 +182,7 @@ app.get("/list/server", async (req, res) => {
     
   } else if (sc) {
     
-    db.find().sort().exec((err, items) => {
+    db.find().sort().exec(async (err, items) => {
       
       let list = [];
       let nonlist = [];
@@ -190,10 +190,10 @@ app.get("/list/server", async (req, res) => {
       for (let i = 0; i < items.length; i++) {
         let item = items[i];
         if (item.guild.name) {
-          let guildGet = client.guilds.cache.get(item.guild.id);
-          if (!guildGet) return;
+          let guildGet1 = await client.guilds.fetch(item.guild.id);
+          let guildGet = client.guilds.cache.get(guildGet1.id)
           
-          if (guildGet.name.indexOf(sc) > -1) {
+          if (guildGet.name.toLowerCase().indexOf(sc.toLowerCase()) > -1) {
             list.push(item)
           } else {
             nonlist.push(item)
