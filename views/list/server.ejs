@@ -62,7 +62,14 @@
     
     <div class="server-box">
       <div class="server-top">
-      <img class="server-icon" alt="server icon" src="<%= guild.iconURL() %>">
+    <% if (!guild.iconURL()) { %>
+    <% let imgs = ["https://cdn.discordapp.com/embed/avatars/1.png", "https://cdn.discordapp.com/embed/avatars/2.png", "https://cdn.discordapp.com/embed/avatars/3.png", "https://cdn.discordapp.com/embed/avatars/4.png"] 
+    let img = imgs[Math.floor(Math.random() * imgs.length)]
+    %>
+    <img src="<%= img %>" class="server-icon" alt="guild icon">
+    <% } else { %>
+    <img src="<%= guild.iconURL() %>" class="server-icon" alt="guild icon">
+    <% } %>
       <br>
       <h2 class="server-name"><%= guild.name %></h2>
       <br>
