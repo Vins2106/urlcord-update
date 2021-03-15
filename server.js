@@ -184,6 +184,7 @@ app.get("/list/server", async (req, res) => {
     db.find().sort().exec((err, items) => {
       
       let list = [];
+      let nonlist = [];
       
       for (let i = 0; i < items.length; i++) {
         let guild = items[i];
@@ -191,13 +192,15 @@ app.get("/list/server", async (req, res) => {
           if (guild.guild.name.indexOf(sc)) {
             list.push(guild)
           } else {
-            
+            nonlist.push(guild)
           }
         } else {
-          
+          nonlist.push(guild)
         }
       }
 
+       // halo halo
+      
    res.render("list/index.ejs", {
      req,
      res,
