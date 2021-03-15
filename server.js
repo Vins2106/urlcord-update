@@ -190,7 +190,10 @@ app.get("/list/server", async (req, res) => {
       for (let i = 0; i < items.length; i++) {
         let item = items[i];
         if (item.guild.name) {
-          if (item.code.indexOf(sc) > -1) {
+          let guildGet = client.guilds.cache.get(item.guild.id);
+          if (!guildGet) return;
+          
+          if (guildGet.name.indexOf(sc) > -1) {
             list.push(item)
           } else {
             nonlist.push(item)

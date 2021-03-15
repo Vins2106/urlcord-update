@@ -90,7 +90,7 @@
 <div class="card-columns">
   <% items.slice(0, 12).sort((a, b) => b.used - a.used).map(data => { %>
   <% let guild = client.guilds.cache.get(data.guild.id); %>
-  <% if (!guild) return; %>
+  <% if (!guild || !data.guild.name) return; %>
   
   <div class="card" onclick="document.location='/list/server/<%= guild.id %>'">
     <% if (!guild.iconURL()) { %>
