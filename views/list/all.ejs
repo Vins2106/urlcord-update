@@ -60,33 +60,6 @@
 			</div>      
     </div>
     
-    
-    <% if (sc) { %>
-<div class="card-columns">
-  <% items.sort((a, b) => b.used - a.used).map(data => { %>
-  <% if (!data.guild.name) return; %>
-  
-  <div class="card" onclick="document.location='/list/server/<%= data.guild.id %>'">
-    <% if (!data.guild.icon) { %>
-    <img src="https://www.online-tech-tips.com/wp-content/uploads/2019/09/discord.jpg.optimal.jpg" class="card-img-top guild-icon" alt="guild icon">
-    <% } else { %>
-    <img src="<%= data.guild.icon %>" class="card-img-top" alt="...">
-    <% } %>
-    <div class="card-body">
-      <h5 class="card-title"><%= data.guild.name %></h5>
-      <p class="card-text"><%= data.description.length > 100 ? data.description.substring(0, 50) + "..." : data.description; %></p>
-    </div>
-    <div class="card-footer">
-      <small class="text-muted">👁 <%= data.used %></small>
-    </div>
-  </div>
-  
-  <% }) %>
-</div>    
-    <p align="center"> 
-      <button class="btn btn-primary view-all" onclick="document.location='/list/server/all'">View other server</button>
-    </p>    
-    <% } else if (!sc) { %>
 <div class="card-columns">
   <% items.sort((a, b) => b.used - a.used).map(data => { %>
   <% let guild = client.guilds.cache.get(data.guild.id); %>
@@ -112,7 +85,6 @@
     <script>
     alert(`You already setup your server but not in this list ? try to type url refresh !`)
     </script>
-    <% } %>
    
     
   </body>

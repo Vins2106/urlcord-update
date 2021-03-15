@@ -279,6 +279,10 @@ app.post("/list/server", urlencodedParser, async (req, res) => {
   res.redirect(`/list/server?search=${req.body.search}`)
 });
 
+app.post("/list/server/all", urlencodedParser, async (req, res) => {
+  res.redirect(`/list/server?search=${req.body.search}`)
+})
+
 app.get("/list/server/:id", async (req, res) => {
   
   db.findOne({guild_id: req.params.id}, async (err, data) => {
