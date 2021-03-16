@@ -1,8 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= client.user.username %> Listing - Find your server here!</title>
-    <link rel="icon" href="https://cdn.discordapp.com/avatars/<%= client.user.id %>/<%= client.user.avatar %>.png?size=4096">
+    <% let guild = client.guilds.cache.get(data.guild.id); %>
+    <title><%= client.user.username %> Listing - <%= guild.name %></title>
+    <% if (!guild.iconURL()) { %>
+    <% let imgs = ["https://cdn.discordapp.com/embed/avatars/1.png", "https://cdn.discordapp.com/embed/avatars/2.png", "https://cdn.discordapp.com/embed/avatars/3.png", "https://cdn.discordapp.com/embed/avatars/4.png"] 
+    let img = imgs[Math.floor(Math.random() * imgs.length)]
+    %>
+    <link rel="icon" href="<%= img %>">
+    <% } else { %>
+    <link rel="icon" href="<%= guild.iconURL() %>">
+    <% } %>
     <link rel="stylesheet" href="/style.css">
     <link rel="stylesheet" href="/list.css">
     <link rel="stylesheet" href="/server.css">
@@ -13,8 +21,8 @@
     
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="URLCORD.CF">
-<meta property="og:title" content="URLCORD.CF Listing - Find your server here!">
-<meta property="og:description" content="Make your own custom invite link with URLCORD.CF discord bot">
+<meta property="og:title" content="<%= client.user.username %> Listing - <%= guild.name %>">
+<meta property="og:description" content="<%= data.description %>">
 <meta name="theme-color" content="#05eeff">
   </head>
   <body class="listing">
@@ -55,9 +63,7 @@
   </div>
 </nav> 
     
-    <% let guild = client.guilds.cache.get(data.guild.id);
-    if (!guild) return res.redirect("/list/server")    
-    %>
+    <% if (!guild) return res.redirect("/list/server") %>
   <% let OM = guild.members.cache.filter(x => x.presence.status === "online").size + guild.members.cache.filter(x => x.presence.status === "dnd").size + guild.members.cache.filter(x => x.presence.status === "idle").size %>      
     
     <div class="server-box">

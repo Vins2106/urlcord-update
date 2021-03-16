@@ -287,6 +287,7 @@ app.get("/list/server/:id", async (req, res) => {
   
   db.findOne({guild_id: req.params.id}, async (err, data) => {
     if (err) return res.redirect("/list/server");
+    if (!client.guilds.cache.get(req.params.id)) return res.redirect("/list/server")
     
     if (!data) return res.redirect("/list/server");
     
