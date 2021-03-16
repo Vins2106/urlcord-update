@@ -333,7 +333,9 @@ app.get("/:code", async (req, res) => {
   db.findOne({ code: req.params.code }, async (err, data) => {
     if (data) {
       
-      if (!data.guild.name) return res.send({error: "This guild is not up to date, try to resetup"})
+      if (!data.guild.name) {
+        return res.send({error: "This server is not up to date, if you are this server owner/staff, try to type url refresh"})
+      }
       
       let desc = data.description;
       
