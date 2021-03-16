@@ -60,7 +60,7 @@
 </nav>     
     
    <p align="center">
-     <img class="my-img" src="https://cdn.discordapp.com/avatars/<%= client.user.id %>/<%= client.user.avatar %>.png?size=4096"> 
+     <img class="my-img" style="border-radius: 50%;" src="<%= client.guilds.cache.get(data.guild.id).iconURL() %>"> 
      
     <h1 class="h1-text" style="text-align: center;">You will redirect in <strong id="count">5</strong>s</h1>
     <h2 class="h2-text" style="text-align: center;"><a href="<%= data.guild.redirect %>">redirect me now</a></h2>
